@@ -47,8 +47,12 @@
                   <i class="mdi mdi-cached me-2 text-success"></i> Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
+                
                 <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+                <form action="{{route('logout')}}" method="post">
+                  @csrf 
+                  <button class="btn btn-primary" type="submit"><i class="mdi mdi-logout me-2 text-primary"></i> Signout</button>
+                </form>
                 </a>
               </div>
             </li>
