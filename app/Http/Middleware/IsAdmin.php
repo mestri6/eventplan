@@ -21,3 +21,4 @@ class IsAdmin
         return abort(403, 'Unauthorized action'); //melarang siapapun masuk kecuali admin
     }
 }
+}

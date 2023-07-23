@@ -21,3 +21,4 @@ class IsCustomer
         return abort(403, 'Unauthorized action'); //melarang siapapun masuk kecuali customer
     }
 }
+}

@@ -21,3 +21,4 @@ class IsMua
         return abort(403, 'Unauthorized action'); //melarang siapapun masuk kecuali mua
     }
 }
+}
