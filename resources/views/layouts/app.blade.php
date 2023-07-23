@@ -50,6 +50,8 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    @stack('before-script')
     @include('includes.backend.script')
+    @stack('after-script')
   </body>
 </html>

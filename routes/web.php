@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Customer\DashboardCustomerController;
+use App\Http\Controllers\Mua\DashboardMuaController;
+use App\Http\Controllers\Wo\DashboardWoController;
+use App\Http\Controllers\Wo\LayananController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +23,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardAdminController::class, 'index']);
+Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+        Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+    });
+Route::prefix('wo')
+    ->middleware(['auth', 'wo'])
+    ->group(function () {
+        Route::get('/dashboard', [DashboardWoController::class, 'index'])->name('wo.dashboard');
+
+        Route::resource('layanan', LayananController::class);
+    });
+Route::prefix('mua')
+    ->middleware(['auth', 'mua'])
+    ->group(function () {
+        Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
+    });
+Route::prefix('customer')
+    ->middleware(['auth', 'customer'])
+    ->group(function () {
+        Route::get('/dashboard', [DashboardCustomerController::class, 'index'])->name('customer.dashboard');
+    });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
