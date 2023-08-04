@@ -19,12 +19,21 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="{{ route('layanan.index') }}">
-        <span class="menu-title">Layanan</span>
-        <i class="mdi mdi-media menu-icon"></i>
-      </a>
-    </li>
+    @if (Auth::user()->role == 'Wo')
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ route('layanan.index') }}">
+            <span class="menu-title">Layanan</span>
+            <i class="mdi mdi-media menu-icon"></i>
+          </a>
+        </li>
+        @elseif (Auth::user()->role == 'Mua')
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ route('layanan-mua.index') }}">
+            <span class="menu-title">Layanan</span>
+            <i class="mdi mdi-media menu-icon"></i>
+          </a>
+        </li>
+    @endif
 
   </ul>
 </nav>

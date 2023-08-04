@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
 use App\Http\Controllers\Mua\DashboardMuaController;
+use App\Http\Controllers\Mua\LayananMuaController;
 use App\Http\Controllers\Wo\DashboardWoController;
 use App\Http\Controllers\Wo\LayananController;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::prefix('admin')
@@ -35,11 +36,15 @@ Route::prefix('wo')
 
         Route::resource('layanan', LayananController::class);
     });
+
 Route::prefix('mua')
     ->middleware(['auth', 'mua'])
     ->group(function () {
         Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
+
+        Route::resource('layanan-mua', LayananMuaController::class);
     });
+
 Route::prefix('customer')
     ->middleware(['auth', 'customer'])
     ->group(function () {
