@@ -13,8 +13,26 @@
             <a href="classes.html" class="nav-item nav-link">Layanan</a>
             <a href="contact.html" class="nav-item nav-link">Kontak</a>
         </div>
-        <a href="{{ route('register') }}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Daftar Sekarang<i
-                class="fa fa-arrow-right ms-3"></i></a>
+        @guest
+            <a href="{{ route('register') }}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Daftar Sekarang<i
+                    class="fa fa-arrow-right ms-3"></i></a>
+        @endguest
+
+        @auth
+            @if (Auth::user()->role == 'Admin')
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Dashboard<i
+                        class="fa fa-arrow-right ms-3"></i></a>
+            @elseif (Auth::user()->role == 'Wo')
+                <a href="{{ route('wo.dashboard') }}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Dashboard<i
+                        class="fa fa-arrow-right ms-3"></i></a>
+            @elseif (Auth::user()->role == 'Mua')
+                <a href="{{ route('mua.dashboard') }}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Dashboard<i
+                        class="fa fa-arrow-right ms-3"></i></a>
+            @else
+            <a href="{{ route('customer.dashboard') }}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Dashboard<i
+                    class="fa fa-arrow-right ms-3"></i></a>
+            @endif
+        @endauth
     </div>
 </nav>
 <!-- Navbar End -->

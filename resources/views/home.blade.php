@@ -17,12 +17,34 @@
                             <p class="fs-5 fw-medium text-white mb-4 pb-2">
                                 Jadikan pernikahanmu lebih berkesan dengan aplikasi ini.
                             </p>
-                            <a href="{{ route('register') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
-                                Daftar
-                            </a>
-                            <a href="{{ route('login') }}" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">
-                                Masuk
-                            </a>
+                            @guest
+                                <a href="{{ route('register') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                    Daftar
+                                </a>
+                                <a href="{{ route('login') }}" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">
+                                    Masuk
+                                </a>
+                            @endguest
+
+                            @auth
+                                @if (Auth::user()->role == 'Admin')
+                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                        Dashboard
+                                    </a>
+                                @elseif (Auth::user()->role == 'Wo')
+                                    <a href="{{ route('wo.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                        Dashboard
+                                    </a>
+                                @elseif (Auth::user()->role == 'Mua')
+                                    <a href="{{ route('mua.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                        Dashboard
+                                    </a>    
+                                @else
+                                    <a href="{{ route('customer.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                        Dashboard
+                                    </a>
+                                @endif
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -41,11 +63,35 @@
                             <p class="fs-5 fw-medium text-white mb-4 pb-2">
                                 Jadikan pernikahanmu lebih berkesan dengan aplikasi ini.
                             </p>
-                            <a href=""
-                                class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Learn
-                                More</a>
-                            <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Our
-                                Classes</a>
+                            @guest
+                                <a href="{{ route('register') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                    Daftar
+                                </a>
+                                <a href="{{ route('login') }}" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">
+                                    Masuk
+                                </a>
+                            @endguest
+
+                            @auth
+                            @if (Auth::user()->role == 'Admin')
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @elseif (Auth::user()->role == 'Wo')
+                            <a href="{{ route('wo.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @elseif (Auth::user()->role == 'Mua')
+                            <a href="{{ route('mua.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @else
+                            <a href="{{ route('customer.dashboard') }}"
+                                class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @endif
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -64,11 +110,35 @@
                             <p class="fs-5 fw-medium text-white mb-4 pb-2">
                                 Jadikan pernikahanmu lebih berkesan dengan aplikasi ini.
                             </p>
-                            <a href=""
-                                class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Learn
-                                More</a>
-                            <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Our
-                                Classes</a>
+                            @guest
+                                <a href="{{ route('register') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                    Daftar
+                                </a>
+                                <a href="{{ route('login') }}" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">
+                                    Masuk
+                                </a>
+                            @endguest
+
+                            @auth
+                            @if (Auth::user()->role == 'Admin')
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @elseif (Auth::user()->role == 'Wo')
+                            <a href="{{ route('wo.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @elseif (Auth::user()->role == 'Mua')
+                            <a href="{{ route('mua.dashboard') }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @else
+                            <a href="{{ route('customer.dashboard') }}"
+                                class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">
+                                Dashboard
+                            </a>
+                            @endif
+                            @endauth
                         </div>
                     </div>
                 </div>
