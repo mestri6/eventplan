@@ -16,4 +16,9 @@ class Layanan extends Model
     protected $guarded = [
         'id',
     ];
+
+    public function galery()
+    {
+        return $this->hasMany(GaleryLayanan::class, 'layanan_id', 'id');
+    }
 }
