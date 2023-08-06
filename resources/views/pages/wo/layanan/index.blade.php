@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Layanan Wo')
 
 @section('content')
 
@@ -8,7 +8,7 @@
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('layanan.create') }}" class="btn btn-primary">Tambah Layanan</a>
+                <a href="{{ route('layanan-wo.create') }}" class="btn btn-primary">Tambah Layanan</a>
             </div>
             <div class="card-body">
                <div class="table-responsive">

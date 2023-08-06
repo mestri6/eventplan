@@ -7,7 +7,9 @@ use App\Models\Layanan;
 use App\Models\LayananModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LayananController extends Controller
 {
@@ -29,10 +31,10 @@ class LayananController extends Controller
                 })
                 ->editColumn('action', function ($item) {
                     return '
-                        <a href="'. route('layanan.edit', $item->id) .'" class="btn btn-sm btn-primary">
+                        <a href="'. route('layanan-wo.edit', $item->id) .'" class="btn btn-sm btn-primary">
                             <i class="fa fa-pencil-alt"></i>
                         </a>
-                        <form action="'. route('layanan.destroy', $item->id) .'" method="POST" style="display: inline-block;">
+                        <form action="'. route('layanan-wo.destroy', $item->id) .'" method="POST" style="display: inline-block;">
                             '. method_field('delete') . csrf_field() .'
                             <button type="submit" class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash"></i>
@@ -66,11 +68,19 @@ class LayananController extends Controller
             'public'
         );
         $data['slug'] = Str::slug($request->nama_paket);
-        $data['harga'] = str_replace('.', '', $request->harga);
+        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga);
 
-        Layanan::create($data);
+        $item = Layanan::create($data);
 
-        return redirect()->route('layanan.index');
+        if ($item->save()) {
+            Alert::success('Success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('layanan-wo.index');
+        }else{
+            Alert::error('Error', 'Data Gagal Ditambahkan');
+            return back();
+        }
+
+        // return redirect()->route('layanan.index');
     }
 
     /**
@@ -100,13 +110,34 @@ class LayananController extends Controller
         $data = $request->all();
         $data['users_id'] = Auth::user()->id;
         $data['slug'] = Str::slug($request->nama_paket);
-        $data['harga'] = str_replace('.', '', $request->harga);
-
+        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga);
+        
         $item = Layanan::findOrFail($id);
 
-        $item->update($data);
+        if ($request->file('thumbnail')) {
+            if ($item->thumbnail && file_exists(storage_path('app/public/' . $item->thumbnail))) {
+                Storage::delete('public/' . $item->thumbnail);
+            }else{
+                $data['thumbnail'] = $item->thumbnail;
+            }
+            
+            $data['thumbnail'] = $request->file('thumbnail')->store(
+                'assets/layanan',
+                'public'
+            );
+        }else{
+            $data['thumbnail'] = $item->thumbnail;
+        }
 
-        return redirect()->route('layanan.index');
+        if ($item->update($data)) {
+            Alert::success('Success', 'Data Berhasil Diubah');
+            return redirect()->route('layanan-wo.index');
+        }else{
+            Alert::error('Error', 'Data Gagal Diubah');
+            return back();
+        }
+
+        
     }
 
     /**
@@ -115,8 +146,14 @@ class LayananController extends Controller
     public function destroy(string $id)
     {
         $item = Layanan::findOrFail($id);
-        $item->delete();
+        
+        if($item->delete()){
+            Alert::success('Success', 'Data Berhasil Dihapus');
+            return redirect()->route('layanan-wo.index');
+        }else{
+            Alert::error('Error', 'Data Gagal Dihapus');
+            return back();
+        }
 
-        return redirect()->route('layanan.index');
     }
 }

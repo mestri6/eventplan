@@ -13,16 +13,22 @@
         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
       </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="index.html">
-        <span class="menu-title">Dashboard</span>
-        <i class="mdi mdi-home menu-icon"></i>
-      </a>
-    </li>
     @if (Auth::user()->role == 'Wo')
         <li class="nav-item">
-          <a class="nav-link active" href="{{ route('layanan.index') }}">
+          <a class="nav-link {{ (request()->is('wo/dashboard') ? 'active' : '') }}" href="{{ route('wo.dashboard') }}">
+            <span class="menu-title">Dashboard</span>
+            <i class="mdi mdi-home menu-icon"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ (request()->is('wo/layanan-wo') ? 'active' : '') }}" href="{{ route('layanan-wo.index') }}">
             <span class="menu-title">Layanan</span>
+            <i class="mdi mdi-media menu-icon"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ (request()->is('wo/akun') ? 'active' : '') }}" href="{{ route('akun-wo.index') }}">
+            <span class="menu-title">Akun</span>
             <i class="mdi mdi-media menu-icon"></i>
           </a>
         </li>

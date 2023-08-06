@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
 use App\Http\Controllers\Mua\DashboardMuaController;
 use App\Http\Controllers\Mua\LayananMuaController;
+use App\Http\Controllers\Wo\AkunWoController;
 use App\Http\Controllers\Wo\DashboardWoController;
 use App\Http\Controllers\Wo\LayananController;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,8 @@ Route::prefix('wo')
     ->group(function () {
         Route::get('/dashboard', [DashboardWoController::class, 'index'])->name('wo.dashboard');
 
-        Route::resource('layanan', LayananController::class);
+        Route::resource('layanan-wo', LayananController::class);
+        Route::resource('akun-wo', AkunWoController::class);
     });
 
 Route::prefix('mua')
