@@ -19,3 +19,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+    <style>
+        .navbar-brand img {
+            max-height: 50px !important;
+            object-fit: contain;
+        }
+    </style>

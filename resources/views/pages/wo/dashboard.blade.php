@@ -9,7 +9,7 @@
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
                     <img
-                      src="assets/images/dashboard/circle.svg"
+                      src="{{ asset('assets/images/dashboard/circle.svg') }}"
                       class="card-img-absolute"
                       alt="circle-image"
                     />
@@ -26,7 +26,7 @@
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                     <img
-                      src="assets/images/dashboard/circle.svg"
+                      src="{{ asset('assets/images/dashboard/circle.svg') }}"
                       class="card-img-absolute"
                       alt="circle-image"
                     />
@@ -47,7 +47,7 @@
                 >
                   <div class="card-body">
                     <img
-                      src="assets/images/dashboard/circle.svg"
+                      src="{{ asset('assets/images/dashboard/circle.svg') }}"
                       class="card-img-absolute"
                       alt="circle-image"
                     />

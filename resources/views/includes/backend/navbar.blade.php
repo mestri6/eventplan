@@ -5,11 +5,11 @@
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo" href="index.html"
-            ><img src="assets/images/logo.svg" alt="logo"
+          <a class="navbar-brand brand-logo" href="/"
+            ><img src="{{ asset('assets/logo-eventplan-sm.png') }}" style="max-height: 50px !important" alt="logo"
           /></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"
-            ><img src="assets/images/logo-mini.svg" alt="logo"
+          <a class="navbar-brand brand-logo-mini" href="/"
+            ><img src="{{ asset('assets/logo-eventplan.png') }}" style="max-height: 50px" alt="logo"
           /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -32,7 +32,7 @@
                 aria-expanded="false"
               >
                 <div class="nav-profile-img">
-                  <img src="assets/images/faces/face1.jpg" alt="image" />
+                  <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="image" />
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
@@ -44,14 +44,14 @@
                 aria-labelledby="profileDropdown"
               >
                 <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-cached me-2 text-success"></i> Activity Log
+                  <i class="fas fa-user me-2 text-success"></i> Akun
                 </a>
                 <div class="dropdown-divider"></div>
                 
                 <a class="dropdown-item" href="#">
                 <form action="{{route('logout')}}" method="post">
                   @csrf 
-                  <button class="btn btn-primary" type="submit"><i class="mdi mdi-logout me-2 text-primary"></i> Signout</button>
+                  <button class="btn btn-primary" type="submit"><i class="mdi mdi-logout me-2 text-white"></i> Keluar</button>
                 </form>
                 </a>
               </div>
