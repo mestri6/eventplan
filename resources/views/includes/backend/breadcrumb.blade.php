@@ -20,6 +20,17 @@
             Akun
             @endif
 
+            @elseif (Auth::user()->role == 'Mua')
+            @if (request()->is('mua/dashboard'))
+            Dashboard
+            @elseif (request()->is('mua/layanan-mua'))
+            Layanan
+            @elseif (request()->is('mua/layanan-mua/*'))
+            Layanan
+            @elseif (request()->is('mua/akun-mua'))
+            Akun
+            @endif
+
         @endif
     </h3>
     <nav aria-label="breadcrumb">
@@ -36,14 +47,35 @@
                             Layanan
                         </a>
                         @endif
+
                         @elseif (Auth::user()->role == 'Wo')
-                        
+                        @if (request()->is('wo/dashboard'))
+                            <a href="{{ route('wo.dashboard') }}" style="text-decoration: none">
+                                Dashboard
+                            </a>
+                        @endif
                         @if (request()->is('wo/layanan-wo/create'))
                             <a href="{{ route('layanan-wo.index') }}" style="text-decoration: none">
                                 Layanan
                             </a>
                         @elseif (request()->is('wo/akun-wo'))
                             <a href="{{ route('akun-wo.index') }}" style="text-decoration: none">
+                                Akun
+                            </a>
+                        @endif
+
+                        @elseif (Auth::user()->role == 'Mua')
+                        @if (request()->is('mua/dashboard'))
+                            <a href="{{ route('mua.dashboard') }}" style="text-decoration: none">
+                                Dashboard
+                            </a>
+                        @endif
+                        @if (request()->is('mua/layanan-mua/create'))
+                            <a href="{{ route('layanan-mua.index') }}" style="text-decoration: none">
+                                Layanan
+                            </a>
+                        @elseif (request()->is('mua/akun-mua'))
+                            <a href="{{ route('akun-mua.index') }}" style="text-decoration: none">
                                 Akun
                             </a>
                         @endif
@@ -54,6 +86,13 @@
 
             @elseif (Auth::user()->role == 'Wo')
                 @if (request()->is('wo/layanan-wo/create'))
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span></span>
+                        Tambah Layanan
+                    </li>
+                @endif
+            @elseif (Auth::user()->role == 'Mua')
+                @if (request()->is('mua/layanan-mua/create'))
                     <li class="breadcrumb-item active" aria-current="page">
                         <span></span>
                         Tambah Layanan
