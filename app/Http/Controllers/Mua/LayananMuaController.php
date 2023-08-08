@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LayananMuaController extends Controller
 {
@@ -65,11 +67,17 @@ class LayananMuaController extends Controller
             'public'
         );
         $data['slug'] = Str::slug($request->nama_paket);
-        $data['harga'] = str_replace('.', '', $request->harga);
+        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga);
 
-        Layanan::create($data);
+        $item = Layanan::create($data);
 
-        return redirect()->route('layanan-mua.index');
+        if ($item->save()) {
+            Alert::success('Success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('layanan-mua.index');
+        } else {
+            Alert::error('Error', 'Data Gagal Ditambahkan');
+            return back();
+        }
     }
 
     /**
@@ -99,13 +107,32 @@ class LayananMuaController extends Controller
         $data = $request->all();
         $data['users_id'] = Auth::user()->id;
         $data['slug'] = Str::slug($request->nama_paket);
-        $data['harga'] = str_replace('.', '', $request->harga);
+        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga);
 
         $item = Layanan::findOrFail($id);
 
-        $item->update($data);
+        if ($request->file('thumbnail')) {
+            if ($item->thumbnail && file_exists(storage_path('app/public/' . $item->thumbnail))) {
+                Storage::delete('public/' . $item->thumbnail);
+            } else {
+                $data['thumbnail'] = $item->thumbnail;
+            }
 
-        return redirect()->route('layanan-mua.index');
+            $data['thumbnail'] = $request->file('thumbnail')->store(
+                'assets/layanan',
+                'public'
+            );
+        } else {
+            $data['thumbnail'] = $item->thumbnail;
+        }
+
+        if ($item->update($data)) {
+            Alert::success('Success', 'Data Berhasil Diubah');
+            return redirect()->route('layanan-mua.index');
+        } else {
+            Alert::error('Error', 'Data Gagal Diubah');
+            return back();
+        }
     }
 
     /**
@@ -114,8 +141,13 @@ class LayananMuaController extends Controller
     public function destroy(string $id)
     {
         $item = Layanan::findOrFail($id);
-        $item->delete();
 
-        return redirect()->route('layanan-mua.index');
+        if ($item->delete()) {
+            Alert::success('Success', 'Data Berhasil Dihapus');
+            return redirect()->route('layanan-mua.index');
+        } else {
+            Alert::error('Error', 'Data Gagal Dihapus');
+            return back();
+        }
     }
 }

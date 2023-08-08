@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
+use App\Http\Controllers\Mua\AkunMuaController;
 use App\Http\Controllers\Mua\DashboardMuaController;
 use App\Http\Controllers\Mua\LayananMuaController;
 use App\Http\Controllers\Wo\AkunWoController;
@@ -45,6 +46,7 @@ Route::prefix('mua')
         Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
 
         Route::resource('layanan-mua', LayananMuaController::class);
+        Route::resource('akun-mua', AkunMuaController::class);
     });
 
 Route::prefix('customer')

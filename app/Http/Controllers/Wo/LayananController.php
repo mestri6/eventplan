@@ -154,6 +154,5 @@ class LayananController extends Controller
             Alert::error('Error', 'Data Gagal Dihapus');
             return back();
         }
-
     }
 }
