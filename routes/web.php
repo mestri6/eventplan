@@ -36,6 +36,8 @@ Route::prefix('wo')
     ->group(function () {
         Route::get('/dashboard', [DashboardWoController::class, 'index'])->name('wo.dashboard');
 
+        Route::delete('/layanan-wo/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('delete-gallery-layanan');
+
         Route::resource('layanan-wo', LayananController::class);
         Route::resource('akun-wo', AkunWoController::class);
     });

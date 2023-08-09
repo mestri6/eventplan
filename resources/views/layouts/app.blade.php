@@ -10,7 +10,10 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/logo-eventplan-sm.png') }}" />
     <link rel="icon" type="image/png" href="{{ asset('assets/logo-eventplan-sm.png') }}" />
     <title>@yield('title')</title>
-   @include('includes.backend.style')
+
+    @stack('before-style')
+    @include('includes.backend.style')
+    @stack('after-style')
   </head>
   <body>
     <div class="container-scroller">

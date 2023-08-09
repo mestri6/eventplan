@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('galery_layanans', function (Blueprint $table) {
             $table->id();
-            $table->string('layanan_id');
-            $table->string('foto');
+            $table->integer('layanan_id');
+            $table->string('thumbnail', 100);
             $table->timestamps();
             $table->softDeletes();
         });

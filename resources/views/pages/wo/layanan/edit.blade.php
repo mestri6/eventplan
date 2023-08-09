@@ -7,7 +7,8 @@
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('layanan-wo.update', $item->id) }}" method="POST" enctype="multipart/form-data" id="form-layanan">
+                <form action="{{ route('layanan-wo.update', $item->id) }}" method="POST" enctype="multipart/form-data"
+                    id="form-layanan">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -25,24 +26,39 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-12 col-lg-6">
-                            @if ($item->thumbnail)
-                            <div class="w-100 img-fluid" id="preview-thumbnail">
-                                <img src="{{ Storage::url($item->thumbnail) }}" alt="" style="max-height: 200px"
-                                    class="img-thumbnail" />
+                    <div class="row mb-3" id="gambarLama">
+                        @forelse ($gallery as $item)
+                        <div class="col-6 col-md-3 mb-3">
+                            <figure class="figure gallery-container mb-3"> 
+                                <img src="{{ Storage::url($item->thumbnail) }}"
+                                    class="w-100 img-fluid figure-img img-thumbnail" alt="" />
+                                <a href="javascript:void(0)" onclick="hapusGambar({{ $item->id }});" class="delete-gallery">
+                                    <img src="{{ asset('assets/images/ic_delete.svg') }}" class="img-fluid w-75 h-75"
+                                        alt="icon-delete" />
+                                </a>
+                            </figure>
+                        </div>
+                        @empty
+                        <div class="col-md-12 mb-3">
+                            <div class="text-center">
+                                <p>
+                                    Anda belum memiliki gambar untuk layanan ini.
+                                </p>
                             </div>
-                            @else
-                                <div class="w-100 img-fluid" id="preview-thumbnail">
-                                </div>
-                            @endif
+                        </div>
+                        @endforelse
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12 col-lg-3">
+                            <div class="w-100 img-fluid" id="preview-thumbnail">
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
                                 <label for="thumbnail">Thumbnail</label>
-                                <input type="file" name="thumbnail" id="thumbnail" class="form-control">
+                                <input type="file" name="thumbnail[]" id="thumbnail" class="form-control" multiple>
                             </div>
                         </div>
                     </div>
@@ -129,15 +145,48 @@
     // untuk menampilkan thumbnail
     if ($('#thumbnail').length > 0) {
         $('#thumbnail').change(function () {
-            var file = $(this)[0].files[0];
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#preview-thumbnail').html(
-                        '<img src="' + e.target.result + '" class="img-thumbnail" style="max-height: 200px" />'
-                    );
-                }
-                reader.readAsDataURL(file);
+            var total_file = document.getElementById("thumbnail").files.length;
+            for (var i = 0; i < total_file; i++) {
+                $('#preview-thumbnail').append("<img src='" + URL.createObjectURL(event.target.files[i]) + "' class='img-thumbnail' style='max-height: 200px' />");
+            }
+        });
+    }
+
+    // script ini digunakan untuk menghapus preview thumbnail
+    if ($('#preview-thumbnail').length > 0) {
+        $('#preview-thumbnail').on('click', '.img-thumbnail', function () {
+            $(this).remove();
+            $('#thumbnail').val('');
+        });
+    }
+
+    function hapusGambar(id) {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Gambar yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus gambar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{ url('/wo/layanan-wo/delete-gallery') }}/" + id,
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        _method: "DELETE",
+                    },
+                    success: function (response) {
+                        Swal.fire(
+                            'Terhapus!',
+                            'Gambar berhasil dihapus.',
+                            'success'
+                        );
+                        $('#gambarLama').load(document.URL + ' #gambarLama');
+                    }
+                });
             }
         });
     }
@@ -164,4 +213,19 @@
         rupiah.value = formatRupiah(this.value, 'Rp. ');
     });
 </script>
+@endpush
+
+@push('after-style')
+<style>
+    .gallery-container {
+        position: relative;
+    }
+    .gallery-container .delete-gallery {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        transform: translate(25%, -25%);
+    }
+</style>
 @endpush

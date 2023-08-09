@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Wo;
 
 use App\Http\Controllers\Controller;
+use App\Models\GaleryLayanan;
 use App\Models\Layanan;
 use App\Models\LayananModel;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class LayananController extends Controller
                     return 'Rp. ' . number_format($item->harga, 0, ',', '.');
                 })
                 ->editColumn('thumbnail', function ($item) {
-                    return $item->thumbnail ? '<img src="' . url('storage/' . $item->thumbnail) . '" style="max-height: 50px;" />' : '-';
+                    $galery = GaleryLayanan::where('layanan_id', $item->id)->first();
+                    return $galery ? '<img src="' . url('storage/' . $galery->thumbnail) . '" style="max-height: 50px;" />' : '-';
                 })
                 ->editColumn('action', function ($item) {
                     return '
@@ -63,14 +65,27 @@ class LayananController extends Controller
     {
         $data = $request->all();
         $data['users_id'] = Auth::user()->id;
-        $data['thumbnail'] = $request->file('thumbnail')->store(
-            'assets/layanan',
-            'public'
-        );
         $data['slug'] = Str::slug($request->nama_paket);
         $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga);
 
         $item = Layanan::create($data);
+
+        // jika ada request thumbnail looping dan masukan data kedalam layanan galery
+        if($request->hasFile('thumbnail')){
+            // script ini akan menampilkan error jika foto yang di inputkan lebih dari 4
+            if (count($request->file('thumbnail')) > 4) {
+                Alert::error('Error', 'Mohon Maaf, Maksimal 4 Foto');
+                return back();
+            }else{
+                // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
+                foreach ($request->file('thumbnail') as $file) {
+                    $data = GaleryLayanan::create([
+                        'layanan_id' => $item->id,
+                        'thumbnail' => $file->store('assets/layanan', 'public')
+                    ]);
+                }
+            }
+        }
 
         if ($item->save()) {
             Alert::success('Success', 'Data Berhasil Ditambahkan');
@@ -97,9 +112,8 @@ class LayananController extends Controller
     public function edit(string $id)
     {
         $item = Layanan::findOrFail($id);
-        return view('pages.wo.layanan.edit', [
-            'item' => $item
-        ]);
+        $gallery = GaleryLayanan::where('layanan_id', $id)->get();
+        return view('pages.wo.layanan.edit', compact('item', 'gallery'));
     }
 
     /**
@@ -114,30 +128,33 @@ class LayananController extends Controller
         
         $item = Layanan::findOrFail($id);
 
-        if ($request->file('thumbnail')) {
-            if ($item->thumbnail && file_exists(storage_path('app/public/' . $item->thumbnail))) {
-                Storage::delete('public/' . $item->thumbnail);
+        // jika file thumbnail ada dan kalau gambarnya lebih dari 4 dia tidak akan menyimpan data dan akan menampilkan error
+        if($request->hasFile('thumbnail')){
+            if (count($request->file('thumbnail')) > 4) {
+                Alert::error('Error', 'Mohon Maaf, Maksimal 4 Foto');
+                return back();
             }else{
-                $data['thumbnail'] = $item->thumbnail;
+                // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
+                foreach ($request->file('thumbnail') as $file) {
+                    $data = new GaleryLayanan;
+                    $data->layanan_id = $item->id;
+                    $data->thumbnail = $file->store('assets/layanan', 'public');
+                    $data->save();
+                }
             }
-            
-            $data['thumbnail'] = $request->file('thumbnail')->store(
-                'assets/layanan',
-                'public'
-            );
-        }else{
-            $data['thumbnail'] = $item->thumbnail;
         }
 
-        if ($item->update($data)) {
+        // $item->update([$data]);
+        // return redirect()->route('layanan-wo.index');
+        
+
+        if ($item->update([$data])) {
             Alert::success('Success', 'Data Berhasil Diubah');
             return redirect()->route('layanan-wo.index');
         }else{
             Alert::error('Error', 'Data Gagal Diubah');
             return back();
         }
-
-        
     }
 
     /**
@@ -154,5 +171,17 @@ class LayananController extends Controller
             Alert::error('Error', 'Data Gagal Dihapus');
             return back();
         }
+    }
+
+    public function deleteGallery(Request $request, $id)
+    {
+        $item = GaleryLayanan::findOrFail($id);
+        $item->delete();
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Foto Berhasil Dihapus'
+        ]);
     }
 }
