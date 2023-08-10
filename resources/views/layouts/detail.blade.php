@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        Event Planner - Aplikasi Manajemen Event
+        Event Planner - Detail Layanan
     </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/logo-eventplan-sm.png') }}" />
@@ -26,18 +26,8 @@
         </div>
         <!-- Spinner End -->
 
-
-        @include('includes.navbar')
-
-
         @yield('content')
 
-
-        @include('includes.footer')
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     @stack('before-script')

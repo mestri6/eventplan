@@ -17,7 +17,12 @@ class Layanan extends Model
         'id',
     ];
 
-    public function galery()
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id', 'id');
+    }
+
+    public function galleries()
     {
         return $this->hasMany(GaleryLayanan::class, 'layanan_id', 'id');
     }

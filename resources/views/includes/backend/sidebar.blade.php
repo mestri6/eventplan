@@ -27,6 +27,12 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link {{ (request()->is('wo/transaksi-wo') ? 'active' : '') }}" href="#">
+            <span class="menu-title">Transaksi</span>
+            <i class="mdi mdi-file-image menu-icon"></i>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {{ (request()->is('wo/akun') ? 'active' : '') }}" href="{{ route('akun-wo.index') }}">
             <span class="menu-title">Akun</span>
             <i class="mdi mdi-face-profile menu-icon"></i>

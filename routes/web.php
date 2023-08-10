@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mua\AkunMuaController;
 use App\Http\Controllers\Mua\DashboardMuaController;
 use App\Http\Controllers\Mua\LayananMuaController;
@@ -22,9 +23,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class,'index'])->name('home');
+Route::get('/detail-layanan/{slug}', [HomeController::class, 'detailLayanan'])->name('detail');
 
 Route::prefix('admin')
     ->middleware(['auth', 'admin'])
