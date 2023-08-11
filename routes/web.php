@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mua\AkunMuaController;
@@ -30,6 +31,8 @@ Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+        
+        Route::resource('kategori', KategoriController::class);
     });
 Route::prefix('wo')
     ->middleware(['auth', 'wo'])

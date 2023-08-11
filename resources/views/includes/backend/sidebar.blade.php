@@ -13,6 +13,20 @@
         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
       </a>
     </li>
+    @if (Auth::user()->role == 'Admin')
+        <li class="nav-item">
+          <a class="nav-link {{ (request()->is('admin/dashboard') ? 'active' : '') }}" href="{{ route('admin.dashboard') }}">
+            <span class="menu-title">Dashboard</span>
+            <i class="mdi mdi-home menu-icon"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ (request()->is('admin/kategori') ? 'active' : '') }}" href="{{ route('kategori.index') }}">
+            <span class="menu-title">Kategori Layanan</span>
+            <i class="mdi mdi-home menu-icon"></i>
+          </a>
+        </li>
+    @endif
     @if (Auth::user()->role == 'Wo')
         <li class="nav-item">
           <a class="nav-link {{ (request()->is('wo/dashboard') ? 'active' : '') }}" href="{{ route('wo.dashboard') }}">

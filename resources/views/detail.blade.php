@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row p-3">
         <div class="col-12 col-lg-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -14,7 +14,7 @@
             </nav>
         </div>
     </div>
-    <div class="row">
+    <div class="row p-3">
         <div class="col-md-6 mb-5">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner rounded" style="max-height: 340px; background-size: cover">
@@ -66,9 +66,12 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row p-3">
         <div class="col-12 col-lg-12">
-            <h3></h3>
+            <h3>Checkout</h3>
+        </div>
+        <div class="col-12 col-lg-12">
+            
         </div>
     </div>
 </div>

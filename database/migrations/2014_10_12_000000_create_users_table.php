@@ -23,13 +23,12 @@ return new class extends Migration
             $table->string('foto_usaha')->nullable();
             $table->text('alamat')->nullable();
             $table->string('status_akun')->nullable();
-            $table->string('id_kategori_layanan');
+            $table->string('id_kategori_layanan')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            
         });
     }
 

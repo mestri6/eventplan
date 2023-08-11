@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class KategoriLayanan extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $table = 'galery_layanans';
+    protected $table = 'kategori_layanans';
     protected $primaryKey = 'id';
 
     protected $guarded = [
