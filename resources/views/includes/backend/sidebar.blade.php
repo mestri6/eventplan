@@ -26,6 +26,22 @@
             <i class="mdi mdi-home menu-icon"></i>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ (request()->is('admin/transaksi') ? 'active' : '') }}" href="#">
+            <span class="menu-title">Transaksi</span>
+            <i class="mdi mdi-credit-card-multiple menu-icon"></i>
+          </a>
+        </li>
+        <li class="nav-item sidebar-actions">
+          <span class="nav-link d-grid">
+            <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-block col btn-lg btn-gradient-primary mt-4">
+                Keluar
+              </button>
+            </form>
+          </span>
+        </li>
     @endif
     @if (Auth::user()->role == 'Wo')
         <li class="nav-item">
@@ -43,7 +59,7 @@
         <li class="nav-item">
           <a class="nav-link {{ (request()->is('wo/transaksi-wo') ? 'active' : '') }}" href="#">
             <span class="menu-title">Transaksi</span>
-            <i class="mdi mdi-file-image menu-icon"></i>
+            <i class="mdi mdi-credit-card-multiple menu-icon"></i>
           </a>
         </li>
         <li class="nav-item">
@@ -51,6 +67,16 @@
             <span class="menu-title">Akun</span>
             <i class="mdi mdi-face-profile menu-icon"></i>
           </a>
+        </li>
+        <li class="nav-item sidebar-actions">
+          <span class="nav-link d-grid">
+            <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-block col btn-lg btn-gradient-primary mt-4">
+                Keluar
+              </button>
+            </form>
+          </span>
         </li>
         @elseif (Auth::user()->role == 'Mua')
         <li class="nav-item">
@@ -70,6 +96,16 @@
             <span class="menu-title">Akun</span>
             <i class="mdi mdi-face-profile menu-icon"></i>
           </a>
+        </li>
+        <li class="nav-item sidebar-actions">
+          <span class="nav-link d-grid">
+            <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-block col btn-lg btn-gradient-primary mt-4">
+                Keluar
+              </button>
+            </form>
+          </span>
         </li>
     @endif
 
