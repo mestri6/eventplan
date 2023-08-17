@@ -3,8 +3,12 @@
 		<li class="nav-item nav-profile">
 			<a href="#" class="nav-link">
 				<div class="nav-profile-image">
-					<img src="{{ asset('assets/logo-eventplan.png') }}" alt="profile" />
-					<span class="login-status online"></span>
+					@if (Auth::user()->foto_profile == null)
+						<img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="image" />
+						@else
+						<img src="{{ Storage::url(Auth::user()->foto_profile) }}" alt="image" />
+						<span class="login-status online"></span>
+					@endif
 				</div>
 				<div class="nav-profile-text d-flex flex-column">
 					<span class="font-weight-bold mb-2">{{ Auth::user()->name ?? '' }}</span>
@@ -148,7 +152,14 @@
 		</li>
 		
 		<li class="nav-item">
-			<a class="nav-link {{ (request()->is('customer/akun') ? 'active' : '') }}" href="{{ route('akun-mua.index') }}">
+			<a class="nav-link {{ (request()->is('customer/transaksi') ? 'active' : '') }}" href="{{ route('transaksi-customer.index') }}">
+				<span class="menu-title">Transaksi</span>
+				<i class="mdi mdi-credit-card-multiple menu-icon"></i>
+			</a>
+		</li>
+
+		<li class="nav-item">
+			<a class="nav-link {{ (request()->is('customer/akun') ? 'active' : '') }}" href="{{ route('akun-customer.index') }}">
 				<span class="menu-title">Akun</span>
 				<i class="mdi mdi-face-profile menu-icon"></i>
 			</a>

@@ -20,7 +20,11 @@
     <div class="col-12 col-lg-12">
         <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading">Perhatian!</h4>
-            <p>Akun anda ditolak oleh admin, silahkan untuk menghubungi admin.</p>
+            <p>Akun anda ditolak oleh admin, dengan alasan dibawah ini.</p>
+            <p>
+                <strong>Alasan: &nbsp; </strong>
+                "{{ $user->alasan_penolakan }}"
+            </p>
             <hr>
             <p class="mb-0">Terima kasih.</p>
         </div>
@@ -56,7 +60,7 @@
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
                                 <label for="nama_usaha">Pilih Kategori Akun</label>
-                                <select name="kategori_akun" id="kategori_akun" class="form-control-sm w-100" required>
+                                <select name="id_kategori_layanan" id="id_kategori_layanan" class="form-control-sm w-100" required>
                                     <option value="">-- Pilih Kategori Akun --</option>
                                     @foreach ($kategori as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama }}</option>

@@ -38,40 +38,34 @@
         </div>
         <div class="col-md-6 product_data">
             <div class="d-flex name-store">
-                <div class="flex-shrink-0">
-                    <img src="{{ url('/images/ic_store.svg') }}" class="img-fluid" alt="" />
-                </div>
                 <div class="flex-grow-1 ms-3 py-1">
                     <h3>
                         Dekorasi Pernikahan
                     </h3>
                 </div>
+                <div class="flex-grow-1 ms-3 py-1 text-end">
+                    <h3>
+                        <a href="">
+                            <i class="bi bi-cart-plus"></i>
+                        </a>
+                    </h3>
+                </div>
             </div>
-            <div class="rating-product mb-1 ms-3">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+            <div class="price mb-1 ms-3">
+                <h4>
+                    Rp. 1.000.000
+                </h4>
             </div>
             <div class="deskripsi ms-3">
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, qui! Porro ea consequatur debitis
                     perspiciatis, necessitatibus velit asperiores rerum magnam. Quia eos rem iure facilis beatae ipsum
-                    temporibus numquam nam omnis optio at dolor enim est eius ullam minima blanditiis, quo esse cumque
-                    suscipit? Quasi itaque ipsa esse? Officia, vero atque. Commodi nisi voluptatum sit nihil blanditiis
-                    quam, dolore eaque nobis aperiam ipsam recusandae dignissimos placeat. Deleniti veniam fuga adipisci
-                    maiores, magnam temporibus amet nemo consequatur ducimus officiis doloremque nulla.
+                    temporibus numquam nam omnis optio at dolor enim est eius ullam minima blanditiis.
                 </p>
             </div>
-        </div>
-    </div>
-    <div class="row p-3">
-        <div class="col-12 col-lg-12">
-            <h3>Checkout</h3>
-        </div>
-        <div class="col-12 col-lg-12">
-            
+            <div class="checkout ms-3 mt-5">
+                <a href="{{ route('cart') }}" class="btn btn-checkout">Pesan Sekarang</a>
+            </div>
         </div>
     </div>
 </div>
@@ -81,6 +75,24 @@
 <style>
     .container {
         margin-top: 100px;
+    }
+
+    .btn-checkout {
+        background-color: #FE5D37;
+        color: #fff;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .btn-checkout:hover {
+        background-color: #ff6846;
+        color: #fff;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 600;
+        font-size: 16px;
     }
 </style>
 @endpush

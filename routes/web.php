@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Customer\AkunCustomerController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
+use App\Http\Controllers\Customer\TransaksiCustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mua\AkunMuaController;
 use App\Http\Controllers\Mua\DashboardMuaController;
@@ -67,8 +70,18 @@ Route::prefix('customer')
 
         Route::get('/upgrade', [DashboardCustomerController::class, 'upgrade'])->name('customer.upgrade');
         Route::post('/akun/upgrade', [DashboardCustomerController::class, 'upgradeAkun'])->name('customer.upgrade-akun');
+
+        Route::resource('transaksi-customer', TransaksiCustomerController::class);
+        Route::resource('akun-customer', AkunCustomerController::class);
     });
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::post('/cart/{id}', [CartController::class, 'add'])->name('cart-add');
+    Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    
+});
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

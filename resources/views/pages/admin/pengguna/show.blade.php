@@ -19,7 +19,7 @@
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
                             <label>Nomor Wa (Aktif)</label>
-                            <input type="number" class="form-control" value="{{ $item->no_wa }}" />
+                            <input type="number" class="form-control" value="{{ $item->no_wa }}" readonly />
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
                             <label>Kategori Akun</label>
-                            <input type="number" class="form-control" value="{{ $item->kategori->nama }}" readonly />
+                            <input type="text" class="form-control" value="{{ $item->kategori->nama }}" readonly />
                         </div>
                     </div>
                 </div>
@@ -82,8 +82,9 @@
                     <form action="{{ route('admin.tolak-pengguna') }}" method="POST">
                         @csrf
                     </form>
-                    <form action="{{ route('admin.verif-pengguna') }}" method="POST">
+                    <form action="{{ route('admin.verif-pengguna') }}" method="POST" id="form-verifikasi">
                         @csrf
+                        <input type="hidden" name="id" id="id" value="{{ $item->id }}">
                         <button type="submit" class="btn btn-primary btn-block col w-full"
                             id="btnSave">Verifikasi</button>
                     </form>
@@ -104,6 +105,7 @@
             </div>
             <form action="{{ route('admin.tolak-pengguna') }}" method="POST" id="form-tolak-pengguna">
                 @csrf
+                <input type="hidden" name="id" id="id" value="{{ $item->id }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-lg-12">
@@ -136,7 +138,7 @@
 
 <script>
     // digunakan untuk memberikan effect loading pada button simpan ketika akan di simpan datanya
-    $('#form-layanan').on('submit', function() {
+    $('#form-verifikasi').on('submit', function() {
         $('#btnSave').attr('disabled', 'disabled');
         $('#btnSave').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Menyimpan...');
     });

@@ -52,20 +52,19 @@ class DashboardAdminController extends Controller
     {
         $item = User::findOrFail($request->id);
         $item->status_akun = 'Terverifikasi';
-        $item->save();
 
         if ($item->save()) {
             Alert::success('Berhasil', 'Berhasil Verifikasi pengguna');
-            return redirect()->route('admin.verif-pengguna');
+            return redirect()->route('admin.table-pengguna');
         } else {
             Alert::error('Gagal', 'Gagal Verifikasi pengguna');
-            return redirect()->route('admin.verif-pengguna');
+            return redirect()->route('admin.table-pengguna');
         }
     }
 
     public function showVerifPenggua(string $id)
     {
-        $item = User::with(['kategori'])->findOrFail($id);
+        $item = User::with('kategori')->findOrFail($id);
         return view('pages.admin.pengguna.show', compact('item'));
     }
 
@@ -78,10 +77,10 @@ class DashboardAdminController extends Controller
 
         if($data->save()){
             Alert::success('Berhasil', 'Berhasil menolak pengguna');
-            return redirect()->route('admin.verif-pengguna');
+            return redirect()->route('admin.table-pengguna');
         }else{
             Alert::error('Gagal', 'Gagal menolak pengguna');
-            return redirect()->route('admin.verif-pengguna');
+            return redirect()->route('admin.table-pengguna');
         }
     }
 }
