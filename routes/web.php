@@ -32,6 +32,12 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
         
+        Route::get('/verifikasi', [DashboardAdminController::class, 'tablePengguna'])->name('admin.table-pengguna');
+        Route::get('/verifikasi/show/pengguna/{id}', [DashboardAdminController::class, 'showVerifPenggua'])->name('admin.show-pengguna');
+        Route::post('/verifikasi/pengguna', [DashboardAdminController::class, 'verifPengguna'])->name('admin.verif-pengguna');
+        Route::post('/verifikasi/tolak/pengguna', [DashboardAdminController::class, 'tolakPengguna'])->name('admin.tolak-pengguna');
+
+
         Route::resource('kategori', KategoriController::class);
     });
 Route::prefix('wo')
@@ -49,7 +55,7 @@ Route::prefix('mua')
     ->middleware(['auth', 'mua'])
     ->group(function () {
         Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
-
+        Route::delete('/layanan-mua/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('mua-delete-gallery-layanan');
         Route::resource('layanan-mua', LayananMuaController::class);
         Route::resource('akun-mua', AkunMuaController::class);
     });
@@ -58,6 +64,9 @@ Route::prefix('customer')
     ->middleware(['auth', 'customer'])
     ->group(function () {
         Route::get('/dashboard', [DashboardCustomerController::class, 'index'])->name('customer.dashboard');
+
+        Route::get('/upgrade', [DashboardCustomerController::class, 'upgrade'])->name('customer.upgrade');
+        Route::post('/akun/upgrade', [DashboardCustomerController::class, 'upgradeAkun'])->name('customer.upgrade-akun');
     });
 
 Auth::routes();

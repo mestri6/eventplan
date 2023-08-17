@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mua;
 
 use App\Http\Controllers\Controller;
+use App\Models\GaleryLayanan;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,8 @@ class LayananMuaController extends Controller
                     return 'Rp. ' . number_format($item->harga, 0, ',', '.');
                 })
                 ->editColumn('thumbnail', function ($item) {
-                    return $item->thumbnail ? '<img src="' . url('storage/' . $item->thumbnail) . '" style="max-height: 50px;" />' : '-';
+                    $galery = GaleryLayanan::where('layanan_id', $item->id)->first();
+                    return $galery ? '<img src="' . url('storage/' . $galery->thumbnail) . '" style="max-height: 50px;" />' : '-';
                 })
                 ->editColumn('action', function ($item) {
                     return '
@@ -62,14 +64,27 @@ class LayananMuaController extends Controller
     {
         $data = $request->all();
         $data['users_id'] = Auth::user()->id;
-        $data['thumbnail'] = $request->file('thumbnail')->store(
-            'assets/layanan',
-            'public'
-        );
         $data['slug'] = Str::slug($request->nama_paket);
-        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga);
+        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga); 
 
         $item = Layanan::create($data);
+
+        // jika ada request thumbnail lpooping dan masukan data kedalam layanan galery
+        if ($request->hasFile('thumbnail')) {
+            // script ini akan menampilkan error jika foto yang di inputkan lebih dari 4
+            if (count($request->file('thumbnail')) > 4) {
+                Alert::error('Error', 'Mohon Maaf, Maksimal 4 Foto');
+                return back();
+            } else {
+                // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
+                foreach ($request->file('thumbnail') as $file) {
+                    $data = GaleryLayanan::create([
+                        'layanan_id' => $item->id,
+                        'thumbnail' => $file->store('assets/layanan', 'public')
+                    ]);
+                }
+            }
+        }
 
         if ($item->save()) {
             Alert::success('Success', 'Data Berhasil Ditambahkan');
@@ -94,9 +109,8 @@ class LayananMuaController extends Controller
     public function edit(string $id)
     {
         $item = Layanan::findOrFail($id);
-        return view('pages.mua.layanan.edit', [
-            'item' => $item
-        ]);
+        $gallery = GaleryLayanan::where('layanan_id', $id)->get();
+        return view('pages.mua.layanan.edit', compact('item', 'gallery'));
     }
 
     /**
@@ -104,29 +118,26 @@ class LayananMuaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
-        $data['users_id'] = Auth::user()->id;
-        $data['slug'] = Str::slug($request->nama_paket);
-        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga);
-
         $item = Layanan::findOrFail($id);
-
-        if ($request->file('thumbnail')) {
-            if ($item->thumbnail && file_exists(storage_path('app/public/' . $item->thumbnail))) {
-                Storage::delete('public/' . $item->thumbnail);
-            } else {
-                $data['thumbnail'] = $item->thumbnail;
+        // jika file thumbnail ada maka looping file thumbnail dan simpan
+        if ($request->hasFile('thumbnail')) {
+            // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
+            foreach ($request->file('thumbnail') as $file) {
+                $data = new GaleryLayanan;
+                $data->layanan_id = $item->id;
+                $data->thumbnail = $file->store('assets/layanan', 'public');
+                $data->save();
             }
-
-            $data['thumbnail'] = $request->file('thumbnail')->store(
-                'assets/layanan',
-                'public'
-            );
-        } else {
-            $data['thumbnail'] = $item->thumbnail;
         }
 
-        if ($item->update($data)) {
+        $simpan = $item->update([
+            'nama_paket' => $request->nama_paket,
+            'users_id' => Auth::user()->id,
+            'slug' => Str::slug($request->nama_paket),
+            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga)
+        ]);
+
+        if ($simpan) {
             Alert::success('Success', 'Data Berhasil Diubah');
             return redirect()->route('layanan-mua.index');
         } else {
@@ -140,6 +151,7 @@ class LayananMuaController extends Controller
      */
     public function destroy(string $id)
     {
+        // hapus data layanan ambil berdasarkan id
         $item = Layanan::findOrFail($id);
 
         if ($item->delete()) {

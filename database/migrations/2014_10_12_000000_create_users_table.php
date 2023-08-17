@@ -20,10 +20,12 @@ return new class extends Migration
             $table->string('nama_usaha')->nullable();
             $table->string('foto_profile')->nullable();
             $table->string('foto_ktp')->nullable();
+            $table->string('surat_rtrw')->nullable();
             $table->string('foto_usaha')->nullable();
             $table->text('alamat')->nullable();
             $table->string('status_akun')->nullable();
             $table->string('id_kategori_layanan')->nullable();
+            $table->string('alasan_penolakan')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

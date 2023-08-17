@@ -25,10 +25,12 @@ class User extends Authenticatable
         'nama_usaha',
         'foto_profile',
         'foto_ktp',
+        'surat_rtrw',
         'foto_usaha',
         'password',
         'alamat',
         'status_akun',
+        'alasan_penolakan',
         'id_kategori_layanan',
     ];
 
@@ -51,4 +53,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriLayanan::class, 'id_kategori_layanan', 'id');
+    }
 }

@@ -1,48 +1,112 @@
 @extends('layouts.app')
 
-@section('title', 'Layanan')
+@section('title', 'Upgrade Akun')
 
 @section('content')
 
+@if ($user->status_akun == 'Meminta Verifikasi')
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Perhatian!</h4>
+            <p>Akun anda sedang diproses oleh admin, silahkan untuk menunggu.</p>
+            <hr>
+            <p class="mb-0">Terima kasih.</p>
+        </div>
+    </div>
+</div>
+@elseif ($user->status_akun == 'Ditolak')
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Perhatian!</h4>
+            <p>Akun anda ditolak oleh admin, silahkan untuk menghubungi admin.</p>
+            <hr>
+            <p class="mb-0">Terima kasih.</p>
+        </div>
+    </div>
+</div>
+@else
 <div class="row">
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('layanan-mua.store') }}" method="POST" enctype="multipart/form-data"
+                <form action="{{ route('customer.upgrade-akun') }}" method="POST" enctype="multipart/form-data"
                     id="form-layanan">
                     @csrf
                     <div class="row">
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12 col-lg-12">
                             <div class="form-group">
-                                <label for="nama_paket">Nama Layanan</label>
-                                <input type="text" name="nama_paket" id="nama_paket" class="form-control"
-                                    placeholder="Masukkan Nama Paket" required>
+                                <label for="nama_usaha">Nama Usaha</label>
+                                <input type="text" name="nama_usaha" id="nama_usaha" class="form-control"
+                                    placeholder="Masukkan Nama Usaha" required>
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label for="harga">Harga</label>
-                                <input name="harga" id="harga" class="form-control" placeholder="Masukan harga"
-                                    required />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-12 col-lg-3">
-                            <div class="w-100 img-fluid" id="preview-thumbnail"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
-                                <label for="thumbnail">Thumbnail</label>
-                                <input type="file" name="thumbnail[]" max="4" id="thumbnail" class="form-control"
-                                    multiple required>
+                                <label for="no_wa">Nomor Wa (Aktif)</label>
+                                <input type="number" name="no_wa" id="no_wa" class="form-control"
+                                    placeholder="Masukan Nomor Wa" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="nama_usaha">Pilih Kategori Akun</label>
+                                <select name="kategori_akun" id="kategori_akun" class="form-control-sm w-100" required>
+                                    <option value="">-- Pilih Kategori Akun --</option>
+                                    @foreach ($kategori as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="foto_profile">Foto Profile</label>
+                                <input type="file" name="foto_profile" id="foto_profile" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="foto_ktp">Foto KTP</label>
+                                <input type="file" name="foto_ktp" id="foto_ktp" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="foto_usaha">Foto Usaha</label>
+                                <input type="file" name="foto_usaha" id="foto_usaha" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="surat_rtrw">Foto Surat Keterangan RT / RW</label>
+                                <input type="file" name="surat_rtrw" id="surat_rtrw" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="alamat">Foto Surat Keterangan RT / RW</label>
+                                <textarea name="alamat" id="alamat" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="d-grid gap-2 d-flex">
-                        <a href="{{ route('layanan-mua.index') }}" class="btn btn-danger col">Batal</a>
+                        <a href="{{ route('customer.dashboard') }}" class="btn btn-danger col">Batal</a>
                         <button type="submit" class="btn btn-primary col" id="btnSave">Simpan</button>
                     </div>
                 </form>
@@ -50,6 +114,7 @@
         </div>
     </div>
 </div>
+@endif
 
 @endsection
 
