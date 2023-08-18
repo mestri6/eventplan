@@ -18,7 +18,7 @@
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
                             <label for="tanggal">Tanggal Acara</label>
-                            <input type="text" class="form-control" value="{{ $item->tanggal_acara }}">
+                            <input type="text" class="form-control" value="{{ $item->tanggal_acara }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-lg-12">
@@ -27,20 +27,22 @@
                             <textarea class="form-control" rows="3" readonly>{{ $item->alamat }}</textarea>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-12">
-                        <form action="{{ route('customer.upload-pembayaran') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="id" value="{{ $item->id }}">
-                            <div class="form-group">
-                                <label for="alamat">Upload Bukti Pembayaran</label>
-                                <input type="file" class="form-control" name="bukti_pembayaran">
-                            </div>
-                            <div class="d-grid gap-1 mt-5">
-                                <button type="submit" class="btn btn-primary">Upload</button>
-                            </div>
-                        </form>
-                    </div>
+                    @if ($item->bukti_pembayaran == null)
+                        <div class="col-12 col-lg-12">
+                            <form action="{{ route('customer.upload-pembayaran') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                <div class="form-group">
+                                    <label for="alamat">Upload Bukti Pembayaran</label>
+                                    <input type="file" class="form-control" name="bukti_pembayaran">
+                                </div>
+                                <div class="d-grid gap-1 mt-5">
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

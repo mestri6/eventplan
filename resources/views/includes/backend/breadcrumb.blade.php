@@ -48,6 +48,8 @@
         Dashboard
         @elseif (request()->is('customer/transaksi-customer'))
         Transaksi
+        @elseif (request()->is('customer/transaksi-customer/*'))
+        Detail Transaksi
         @elseif (request()->is('customer/akun-customer'))
         Akun
         @elseif (request()->is('customer/upgrade'))
@@ -113,6 +115,10 @@
                             Dashboard
                         </a>
                         @elseif (request()->is('customer/transaksi-customer'))
+                        <a href="{{ route('transaksi-customer.index') }}" style="text-decoration: none">
+                            Transaksi
+                        </a>
+                        @elseif (request()->is('customer/transaksi-customer/*'))
                         <a href="{{ route('transaksi-customer.index') }}" style="text-decoration: none">
                             Transaksi
                         </a>

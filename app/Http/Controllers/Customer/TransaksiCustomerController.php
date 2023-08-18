@@ -36,15 +36,23 @@ class TransaksiCustomerController extends Controller
                     }
                 })
                 ->editColumn('action', function ($item) {
-                    if($item->bukti_pembayaran != null){
+                    if($item->status_pembayaran == 'success'){
                         return '
-                            <button class="btn btn-warning text-white" disabled>Sedang Diproses</button>
+                            <div class="d-flex">
+                                <a href="' . route('transaksi-customer.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <button class="btn btn-success text-white mx-2" disabled>Selesai Diproses</button>
+                            </div>
                         ';
                     }else{
                         return '
-                            <a href="' . route('transaksi-customer.show', $item->id) . '" class="btn btn-sm btn-primary">
+                            <div class="d-flex">
+                                <a href="' . route('transaksi-customer.show', $item->id) . '" class="btn btn-sm btn-primary">
                                 <i class="fa fa-eye"></i>
                             </a>
+                            <button class="btn btn-warning text-white" disabled>Sedang Diproses</button>
+                            </div>
                         ';
                     }
                 })
@@ -77,11 +85,7 @@ class TransaksiCustomerController extends Controller
     {
         $item = Transaction::findOrFail($id);
 
-        if ($item->bukti_pembayaran != null) {
-            return abort(404);
-        }else{
-            return view('pages.customer.transaksi-detail', compact('item'));
-        }
+        return view('pages.customer.transaksi-detail', compact('item'));
 
     }
 

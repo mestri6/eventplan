@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\KategoriLayanan;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,9 @@ class DashboardCustomerController extends Controller
 {
     public function index()
     {
-        return view('pages.customer.dashboard');
+        $totalTransaksi = Transaction::where('users_id', Auth::user()->id)->sum('total_pembayaran');
+        $totalOrder = Transaction::where('users_id', Auth::user()->id)->count();
+        return view('pages.customer.dashboard', compact('totalTransaksi', 'totalOrder'));
     }
 
     public function upgrade()
