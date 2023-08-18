@@ -53,7 +53,7 @@
             </div>
             <div class="price mb-1 ms-3">
                 <h4>
-                    Rp. 1.000.000
+                    Rp. {{ number_format($item->harga) }}
                 </h4>
             </div>
             <div class="deskripsi ms-3">
@@ -64,7 +64,10 @@
                 </p>
             </div>
             <div class="checkout ms-3 mt-5">
-                <a href="{{ route('cart') }}" class="btn btn-checkout">Pesan Sekarang</a>
+                <form action="{{ route('cart-add', $item->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-checkout">Pesan Sekarang</button>
+                </form>
             </div>
         </div>
     </div>

@@ -10,6 +10,8 @@
         Dashboard
         @elseif (request()->is('admin/layanan'))
         Layanan
+        @elseif (request()->is('admin/transaksi-admin'))
+        Transaksi
         @endif
         @endif
 
@@ -65,6 +67,10 @@
                 @elseif (request()->is('admin/layanan'))
                 <a href="" style="text-decoration: none">
                     Layanan
+                </a>
+                @elseif (request()->is('admin/transaksi-admin'))
+                <a href="" style="text-decoration: none">
+                    Transaksi
                 </a>
                 @endif
                 @endif

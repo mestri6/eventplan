@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\TransaksiAdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Customer\AkunCustomerController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mua\AkunMuaController;
 use App\Http\Controllers\Mua\DashboardMuaController;
 use App\Http\Controllers\Mua\LayananMuaController;
+use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\Wo\AkunWoController;
 use App\Http\Controllers\Wo\DashboardWoController;
 use App\Http\Controllers\Wo\LayananController;
@@ -40,8 +42,8 @@ Route::prefix('admin')
         Route::post('/verifikasi/pengguna', [DashboardAdminController::class, 'verifPengguna'])->name('admin.verif-pengguna');
         Route::post('/verifikasi/tolak/pengguna', [DashboardAdminController::class, 'tolakPengguna'])->name('admin.tolak-pengguna');
 
-
         Route::resource('kategori', KategoriController::class);
+        Route::resource('transaksi-admin', TransaksiAdminController::class);
     });
 Route::prefix('wo')
     ->middleware(['auth', 'wo'])
@@ -70,6 +72,7 @@ Route::prefix('customer')
 
         Route::get('/upgrade', [DashboardCustomerController::class, 'upgrade'])->name('customer.upgrade');
         Route::post('/akun/upgrade', [DashboardCustomerController::class, 'upgradeAkun'])->name('customer.upgrade-akun');
+        Route::put('/transaksi/upload-pembayaran', [TransaksiCustomerController::class, 'uploadPembayaran'])->name('customer.upload-pembayaran');
 
         Route::resource('transaksi-customer', TransaksiCustomerController::class);
         Route::resource('akun-customer', AkunCustomerController::class);
@@ -77,10 +80,10 @@ Route::prefix('customer')
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
-    Route::post('/cart/{id}', [CartController::class, 'add'])->name('cart-add');
-    Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
-    Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
-    
+    Route::post('/cart/{id}', [CartController::class, 'addToCart'])->name('cart-add');
+    Route::delete('/hapus/cart', [CartController::class, 'destroy'])->name('cart-delete');
+    Route::get('/checkout/pembayaran/success', [TransactionsController::class, 'success'])->name('pembayaran');
+    Route::post('/checkout', [TransactionsController::class, 'checkout'])->name('checkout');
 });
 
 Auth::routes();

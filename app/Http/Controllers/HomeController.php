@@ -24,21 +24,4 @@ class HomeController extends Controller
             'item' => $item,
         ]);
     }
-
-    public function addToCart(Request $request)
-    {
-        $data = Cart::create([
-            'users_id' => Auth::user()->id,
-            'layanan_id' => $request->layanan_id,
-            'total_harga' => $request->total_harga,
-        ]);
-
-        if ($data) {
-            Alert::success('Berhasil', 'Layanan berhasil ditambahkan ke keranjang');
-            return redirect()->route('cart');
-        } else {
-            Alert::error('Gagal', 'Layanan gagal ditambahkan ke keranjang');
-            return redirect()->back();
-        }
-    }
 }

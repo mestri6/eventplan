@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Verifikasi Pengguna')
+@section('title', 'Dashboard')
 
 @section('content')
 
@@ -8,14 +8,14 @@
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive">
-                    <table id="tb_pengguna" class="table table-hover scroll-horizontal-vertical w-100">
+               <div class="table-responsive">
+                    <table id="tb_transaksi" class="table table-hover scroll-horizontal-vertical w-100">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Pemilik</th>
-                                <th>Nama Usaha</th>
-                                <th>Tanggal Pengajuan</th>
+                                <th>Nama</th>
+                                <th>Bukti Pembayaran</th>
+                                <th>Status Pembayaran</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -32,7 +32,7 @@
 
 @push('after-script')
 <script>
-    $('#tb_pengguna').DataTable({
+    $('#tb_transaksi').DataTable({
         processing: true,
         serverSide: true,
         ordering: [[1, 'asc']],
@@ -41,9 +41,9 @@
         },
         columns: [
             { data: 'DT_RowIndex', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'nama_usaha', name: 'nama_usaha' },
-            { data: 'created_at', name: 'created_at' },
+            { data: 'users_id', name: 'users_id' },
+            { data: 'bukti_pembayaran', name: 'bukti_pembayaran' },
+            { data: 'status_pembayaran', name: 'status_pembayaran' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],
     });

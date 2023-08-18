@@ -21,3 +21,5 @@
 
 <!-- Template Stylesheet -->
 <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.jqueryui.min.css">
