@@ -11,7 +11,9 @@ class TransactionsController extends Controller
 {
     public function checkout(Request $request)
     {
+        $layanan = Cart::with(['user', 'layanan'])->where('users_id', Auth::user()->id)->pluck('layanan_id');
         $data = Transaction::create([
+            'layanan_id' => $layanan[0],
             'users_id' => Auth::user()->id,
             'tanggal_acara' => $request->tanggal_acara,
             'alamat' => $request->alamat,

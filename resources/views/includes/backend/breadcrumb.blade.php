@@ -137,20 +137,32 @@
             @if (Auth::user()->role == 'Admin')
 
             @elseif (Auth::user()->role == 'Wo')
-            @if (request()->is('wo/layanan-wo/create'))
-            <li class="breadcrumb-item active" aria-current="page">
-                <span></span>
-                Tambah Layanan
-            </li>
-            @endif
+                @if (request()->is('wo/layanan-wo/create'))
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>
+                    Tambah Layanan
+                </li>
+                @endif
+
+
             @elseif (Auth::user()->role == 'Mua')
-            @if (request()->is('mua/layanan-mua/create'))
-            <li class="breadcrumb-item active" aria-current="page">
-                <span></span>
-                Tambah Layanan
-            </li>
-            @endif
-            @endif
+                @if (request()->is('mua/layanan-mua/create'))
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span></span>
+                        Tambah Layanan
+                    </li>
+                @endif
+
+            @elseif (Auth::user()->role == 'Customer')
+                @if (request()->is('customer/transaksi-customer/*'))
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>
+                    Detail Transaksi
+                </li>
+                @endif
+        @endif
+
+
 
         </ul>
     </nav>

@@ -18,13 +18,43 @@
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
                             <label for="tanggal">Tanggal Acara</label>
-                            <input type="text" class="form-control" value="{{ $item->tanggal_acara }}" readonly>
+                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($item->tanggal_acara)->isoFormat('D MMMM Y') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="bayar">Total Pembayaran</label>
+                            <input type="text" class="form-control" value="Rp.{{ number_format($item->total_pembayaran, 0, ',', '.') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
                             <textarea class="form-control" rows="3" readonly>{{ $item->alamat }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="bank">Layanan</label>
+                            <input type="text" class="form-control" value="{{ $item->layanan->nama_paket }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="bank">Layanan</label>
+                            <input type="text" class="form-control" value="Rp.{{ number_format($item->layanan->harga, 0, ',', '.') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="bank">Nama Pemilik Bank</label>
+                            <input type="text" class="form-control" value="PT. Event Planner" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="norek">Nomor Rekening</label>
+                            <input type="text" class="form-control" value="123456789" readonly>
                         </div>
                     </div>
                     @if ($item->bukti_pembayaran == null)

@@ -39,7 +39,9 @@ class CartController extends Controller
         $kodeUnik = mt_rand(100, 999);
         $harga = Cart::where('users_id', Auth::user()->id)->sum('total_harga');
 
+        
         $totalPembayaran = $harga + $kodeUnik;
+
         return view('cart', compact('kodeUnik', 'harga', 'totalPembayaran'));
     }
 

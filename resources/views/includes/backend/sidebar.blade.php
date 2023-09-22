@@ -82,7 +82,7 @@
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link {{ (request()->is('wo/transaksi-wo') ? 'active' : '') }}" href="#">
+			<a class="nav-link {{ (request()->is('wo/transaksi-wo') ? 'active' : '') }}" href="{{ route('transaksi-wo.index') }}">
 				<span class="menu-title">Transaksi</span>
 				<i class="mdi mdi-credit-card-multiple menu-icon"></i>
 			</a>

@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(KategoriLayanan::class, 'id_kategori_layanan', 'id');
     }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaction::class, 'users_id', 'id');
+    }
 }

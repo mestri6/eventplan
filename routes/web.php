@@ -16,6 +16,7 @@ use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\Wo\AkunWoController;
 use App\Http\Controllers\Wo\DashboardWoController;
 use App\Http\Controllers\Wo\LayananController;
+use App\Http\Controllers\Wo\TransaksiWoController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -53,6 +54,7 @@ Route::prefix('wo')
         Route::delete('/layanan-wo/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('delete-gallery-layanan');
 
         Route::resource('layanan-wo', LayananController::class);
+        Route::resource('transaksi-wo', TransaksiWoController::class);
         Route::resource('akun-wo', AkunWoController::class);
     });
 
