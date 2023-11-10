@@ -19,7 +19,13 @@ class IsCustomer
         if(Auth::user() && Auth::user()->role == 'Customer'){
             return $next($request);
         } else {
-            return abort(403, 'Unauthorized action'); //melarang siapapun masuk kecuali customer
+            // Membuat respons dengan status 403 dan pesan kesalahan
+            $response = response('Unauthorized action', 403);
+
+            // Menambahkan header Refresh untuk mengalihkan pengguna ke 'home' setelah 5 detik
+            $response->header('Refresh', '1;url=' . route('home'));
+
+            return $response;
         }
     }
 }
