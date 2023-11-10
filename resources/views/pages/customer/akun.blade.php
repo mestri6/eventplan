@@ -6,6 +6,9 @@
 <div class="row">
     <div class="col-12 col-lg-12">
         <div class="card">
+            <div class="card-header">
+                <h4>Akun</h4>
+            </div>
             <form action="{{ route('akun-customer.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data" id="form-akun">
                 @csrf
                 @method('PUT')

@@ -8,6 +8,7 @@
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-header">
+                <h4>Kategori Layanan</h4>
                 <a href="{{ route('kategori.create') }}" class="btn btn-primary">Tambah Kategori</a>
             </div>
             <div class="card-body">

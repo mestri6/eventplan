@@ -34,6 +34,9 @@
 <div class="row">
     <div class="col-12 col-lg-12">
         <div class="card">
+            <div class="card-header">
+                <h4>Upgrade Akun</h4>
+            </div>
             <div class="card-body">
                 <form action="{{ route('customer.upgrade-akun') }}" method="POST" enctype="multipart/form-data"
                     id="form-layanan">
@@ -104,7 +107,7 @@
                     <div class="row">
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
-                                <label for="alamat">Foto Surat Keterangan RT / RW</label>
+                                <label for="alamat">Alamat</label>
                                 <textarea name="alamat" id="alamat" class="form-control"></textarea>
                             </div>
                         </div>

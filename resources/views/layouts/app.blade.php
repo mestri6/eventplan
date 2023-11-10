@@ -25,7 +25,6 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            @include('includes.backend.breadcrumb')
             @yield('content')
           </div>
           <!-- content-wrapper ends -->
