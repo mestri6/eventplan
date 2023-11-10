@@ -52,6 +52,7 @@ class DashboardAdminController extends Controller
     {
         $item = User::findOrFail($request->id);
         $item->status_akun = 'Terverifikasi';
+        $item->role = $request->role;
 
         if ($item->save()) {
             Alert::success('Berhasil', 'Berhasil Verifikasi pengguna');

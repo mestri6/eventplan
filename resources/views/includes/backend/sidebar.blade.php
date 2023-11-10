@@ -144,7 +144,7 @@
 
 		@elseif (Auth::user()->role == 'Customer')
 		<li class="nav-item">
-			<a class="nav-link {{ (request()->is('customer/dashboard') ? 'active' : '') }}"
+			<a class="nav-link {{ request()->is('customer/dashboard') ? 'active' : '' }}"
 				href="{{ route('customer.dashboard') }}">
 				<span class="menu-title">Dashboard</span>
 				<i class="mdi mdi-home menu-icon"></i>
@@ -152,7 +152,7 @@
 		</li>
 		
 		<li class="nav-item">
-			<a class="nav-link {{ (request()->is('customer/transaksi-customer') ? 'active' : '') }}" href="{{ route('transaksi-customer.index') }}">
+			<a class="nav-link {{ request()->is('customer/transaksi-customer') ? 'active' : '' }}" href="{{ route('transaksi-customer.index') }}">
 				<span class="menu-title">Transaksi</span>
 				<i class="mdi mdi-credit-card-multiple menu-icon"></i>
 			</a>

@@ -18,8 +18,8 @@ class IsCustomer
     {
         if(Auth::user() && Auth::user()->role == 'Customer'){
             return $next($request);
-    } else{
-        return abort(403, 'Unauthorized action'); //melarang siapapun masuk kecuali customer
+        } else {
+            return abort(403, 'Unauthorized action'); //melarang siapapun masuk kecuali customer
+        }
     }
-}
 }

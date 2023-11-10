@@ -88,6 +88,7 @@
                     <form action="{{ route('admin.verif-pengguna') }}" method="POST" id="form-verifikasi">
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ $item->id }}">
+                        <input type="hidden" name="role" id="role" value="{{ $item->kategori->nama }}">
                         <button type="submit" class="btn btn-primary btn-block col w-full"
                             id="btnSave">Verifikasi</button>
                     </form>
