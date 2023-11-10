@@ -130,23 +130,6 @@
         });
     }
 
-    // untuk menampilkan preview thumbnail
-
-    // if ($('#thumbnail').length > 0) {
-    //     $('#thumbnail').change(function () {
-    //         var file = $(this)[0].files[0];
-    //         if (file) {
-    //             var reader = new FileReader();
-    //             reader.onload = function (e) {
-    //                 $('#preview-thumbnail').html(
-    //                     '<img src="' + e.target.result + '" class="img-thumbnail" style="max-height: 200px" />'
-    //                 );
-    //             }
-    //             reader.readAsDataURL(file);
-    //         }
-    //     });
-    // }
-
     // untuk mengubah harga menjadi rupiah cth: Rp. 15.000.000
     function formatRupiah(angka, prefix){
         var number_string = angka.replace(/[^,\d]/g, '').toString(),

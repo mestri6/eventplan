@@ -32,7 +32,7 @@
 		</li>
 		<li class="nav-item">
 			<a class="nav-link {{ (request()->is('admin/verifikasi') ? 'active' : '') }}"
-				href="{{ route('admin.verif-pengguna') }}">
+				href="{{ route('admin.table-pengguna') }}">
 				<span class="menu-title">Verifikasi Pengguna</span>
 				<i class="mdi mdi-account-check menu-icon"></i>
 			</a>

@@ -46,6 +46,9 @@ Route::prefix('admin')
         Route::resource('kategori', KategoriController::class);
         Route::resource('transaksi-admin', TransaksiAdminController::class);
     });
+
+
+    
 Route::prefix('wo')
     ->middleware(['auth', 'wo'])
     ->group(function () {
