@@ -3,16 +3,33 @@
 namespace App\Http\Controllers\Wo;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AkunWoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.wo.akun.index');
+        $item = User::findOrFail(Auth::user()->id);
+
+        if ($request->isMethod('post')) {
+            $item->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'no_hp' => $request->no_hp,
+                'alamat' => $request->alamat,
+            ]);
+            Alert::success('Berhasil', 'Data berhasil diubah');
+            return redirect()->back();
+        }
+
+        return view('pages.wo.akun.index', compact('item'));
     }
 
     /**
@@ -52,7 +69,22 @@ class AkunWoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->all();
+
+        if ($request->hasFile('foto_profile')) {
+            if (Auth::user()->foto_profile != null) {
+                Storage::disk('public')->delete(Auth::user()->foto_profile);
+                $data['foto_profile'] = $request->file('foto_profile')->store('assets/user', 'public');
+            } else {
+                $data['foto_profile'] = $request->file('foto_profile')->store('assets/user', 'public');
+            }
+        }
+
+        $item = User::findOrFail($id);
+        $item->update($data);
+
+        Alert::success('Berhasil', 'Data berhasil diubah');
+        return redirect()->back();
     }
 
     /**
