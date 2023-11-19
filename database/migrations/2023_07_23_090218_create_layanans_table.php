@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_paket', 50);
             $table->integer('harga');
             $table->string('slug', 50);
+            $table->text('deskripsi');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -50,6 +50,15 @@
 				<i class="mdi mdi-credit-card-multiple menu-icon"></i>
 			</a>
 		</li>
+
+		<li class="nav-item">
+			<a class="nav-link {{ (request()->is('admin/akun') ? 'active' : '') }}"
+				href="{{ route('akun-admin.index') }}">
+				<span class="menu-title">Akun</span>
+				<i class="mdi mdi-face-profile menu-icon"></i>
+			</a>
+		</li>
+
 		<li class="nav-item sidebar-actions">
 			<span class="nav-link d-grid">
 				<form action="{{ route('logout') }}" method="POST">
@@ -152,7 +161,7 @@
 		</li>
 		
 		<li class="nav-item">
-			<a class="nav-link {{ request()->is('customer/transaksi-customer') ? 'active' : '' }}" href="{{ route('transaksi-customer.index') }}">
+			<a class="nav-link {{ request()->is('customer/transaksi-customer/') ? 'active' : '' }}" href="{{ route('transaksi-customer.index') }}">
 				<span class="menu-title">Transaksi</span>
 				<i class="mdi mdi-credit-card-multiple menu-icon"></i>
 			</a>

@@ -41,8 +41,8 @@ class CartController extends Controller
 
         
         $totalPembayaran = $harga + $kodeUnik;
-
-        return view('cart', compact('kodeUnik', 'harga', 'totalPembayaran'));
+        $countCart = Cart::where('users_id', Auth::user()->id)->count();
+        return view('cart', compact('kodeUnik', 'harga', 'totalPembayaran', 'countCart'));
     }
 
     public function addToCart( Request $request ,$id)

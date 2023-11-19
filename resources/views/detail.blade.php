@@ -45,9 +45,10 @@
                 </div>
                 <div class="flex-grow-1 ms-3 py-1 text-end">
                     <h3>
-                        <a href="">
-                            <i class="bi bi-cart-plus"></i>
-                        </a>
+                        <form action="{{ route('cart-add', $item->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-checkout"><i class="bi bi-cart-plus"></i></button>
+                        </form>
                     </h3>
                 </div>
             </div>

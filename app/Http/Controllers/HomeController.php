@@ -13,7 +13,8 @@ class HomeController extends Controller
     public function index()
     {
         $layanan = Layanan::with(['galleries', 'user'])->get();
-        return view('home', compact('layanan'));
+        $countCart = Cart::where('users_id', Auth::user()->id)->count();
+        return view('home', compact('layanan', 'countCart'));
     }
 
     public function detailLayanan(Request $request, $id)

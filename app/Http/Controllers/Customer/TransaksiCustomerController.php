@@ -48,7 +48,7 @@ class TransaksiCustomerController extends Controller
                     }elseif ($item->bukti_pembayaran != null) {
                         return '
                             <div class="d-flex justofy-content-center align-items-center">
-                                <a href="' . route('transaksi-customer.show', $item->id) . '" class="btn btn-primary mx-2">
+                                <a href="' . route('customer.detail-transaksi', $item->id) . '" class="btn btn-primary mx-2">
                                     <i class="fa fa-eye"></i>
                                 </a>
                                 <button class="btn btn-warning text-white disabled">Sedang Diproses</button>
@@ -91,10 +91,7 @@ class TransaksiCustomerController extends Controller
      */
     public function show(string $id)
     {
-        $item = Transaction::with(['layanan'])->findOrFail($id);
-
-        return view('pages.customer.transaksi-detail', compact('item'));
-
+        //
     }
 
     /**
@@ -134,5 +131,11 @@ class TransaksiCustomerController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+
+    public function detailTransaksi($id)
+    {
+        $item = Transaction::findOrFail($id);
+        return view('pages.customer.transaksi-detail', compact('item'));
     }
 }

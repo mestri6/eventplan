@@ -62,6 +62,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-5">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="deskripsi">Isi Deskripsi Layanan</label>
+                                <textarea name="deskripsi" class="ckeditor form-control">
+                                    {{ $item->layanan->deskripsi }}
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
                     <div class="d-grid gap-2 d-flex">
                         <a href="{{ route('layanan-wo.index') }}" class="btn btn-danger col">Batal</a>
                         <button type="submit" class="btn btn-primary col" id="btnSave">Update</button>

@@ -74,7 +74,8 @@ class LayananController extends Controller
             'nama_paket' => $request->nama_paket,
             'users_id' => Auth::user()->id,
             'slug' => Str::slug($request->nama_paket),
-            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga)
+            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga),
+            'deskripsi' => $request->deskripsi
         ]);
 
         // jika ada request thumbnail looping dan masukan data kedalam layanan galery
@@ -144,7 +145,8 @@ class LayananController extends Controller
             'nama_paket' => $request->nama_paket,
             'users_id' => Auth::user()->id,
             'slug' => Str::slug($request->nama_paket),
-            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga)
+            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga),
+            'deskripsi' => $request->deskripsi
         ]);
 
         if ($simpan) {

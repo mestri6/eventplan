@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AkunAdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriController;
@@ -45,6 +46,7 @@ Route::prefix('admin')
 
         Route::resource('kategori', KategoriController::class);
         Route::resource('transaksi-admin', TransaksiAdminController::class);
+        Route::resource('akun-admin', AkunAdminController::class);
     });
 
 
@@ -78,6 +80,7 @@ Route::prefix('customer')
         Route::get('/upgrade', [DashboardCustomerController::class, 'upgrade'])->name('customer.upgrade');
         Route::post('/akun/upgrade', [DashboardCustomerController::class, 'upgradeAkun'])->name('customer.upgrade-akun');
         Route::put('/transaksi/upload-pembayaran', [TransaksiCustomerController::class, 'uploadPembayaran'])->name('customer.upload-pembayaran');
+        Route::get('transaksi-customer/detail/{id}', [TransaksiCustomerController::class, 'detailTransaksi'])->name('customer.detail-transaksi');
 
         Route::resource('transaksi-customer', TransaksiCustomerController::class);
         Route::resource('akun-customer', AkunCustomerController::class);
