@@ -58,7 +58,7 @@ class TransaksiCustomerController extends Controller
                     else{
                         return '
                             <div class="d-flex">
-                                <a href="' . route('transaksi-customer.show', $item->id) . '" class="btn btn-sm btn-primary">
+                                <a href="' . route('customer.detail-transaksi', $item->id) . '" class="btn btn-sm btn-primary">
                                 <i class="fa fa-eye"></i>
                             </a>
                         ';
