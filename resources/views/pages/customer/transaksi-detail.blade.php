@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
-                            <label for="bank">Layanan</label>
+                            <label for="bank">Harga</label>
                             <input type="text" class="form-control" value="Rp.{{ number_format($item->layanan->harga, 0, ',', '.') }}" readonly>
                         </div>
                     </div>
