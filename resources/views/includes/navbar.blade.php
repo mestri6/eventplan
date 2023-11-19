@@ -14,7 +14,7 @@
             <a href="/" class="nav-item nav-link">Kontak</a>
             <a href="{{ route('cart') }}" class="nav-item nav-link {{ request()->is('cart') ? 'active' : '' }}">
                 <i class="fa fa-shopping-cart active"></i>
-                <span class="badge bg-danger rounded-pill">{{ $countCart }}</span>
+                <span class="badge bg-danger rounded-pill">{{ $countCart ?? 0 }}</span>
             </a>
         </div>
         @guest
