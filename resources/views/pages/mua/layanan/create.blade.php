@@ -22,8 +22,7 @@
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label for="harga">Harga</label>
-                                <input name="harga" id="harga" class="form-control" placeholder="Masukan harga"
-                                    required />
+                                <input name="harga" id="harga" class="form-control" placeholder="Masukan harga" required />
                             </div>
                         </div>
                     </div>
@@ -36,8 +35,17 @@
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
                                 <label for="thumbnail">Thumbnail</label>
-                                <input type="file" name="thumbnail[]" max="4" id="thumbnail" class="form-control"
-                                    multiple required>
+                                <input type="file" name="thumbnail[]" max="4" id="thumbnail" class="form-control" multiple required> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="deskripsi">Isi Deskripsi Layanan</label>
+                                <textarea name="deskripsi" class="ckeditor form-control @error('deskripsi') is-invalid @enderror">{{ old('deskripsi')
+                                    }}</textarea>
+                                @error('deskripsi') <div class="text-muted">{{ $message }}</div>@enderror
                             </div>
                         </div>
                     </div>
@@ -129,6 +137,23 @@
             }
         });
     }
+
+    // untuk menampilkan preview thumbnail
+
+    // if ($('#thumbnail').length > 0) {
+    //     $('#thumbnail').change(function () {
+    //         var file = $(this)[0].files[0];
+    //         if (file) {
+    //             var reader = new FileReader();
+    //             reader.onload = function (e) {
+    //                 $('#preview-thumbnail').html(
+    //                     '<img src="' + e.target.result + '" class="img-thumbnail" style="max-height: 200px" />'
+    //                 );
+    //             }
+    //             reader.readAsDataURL(file);
+    //         }
+    //     });
+    // }
 
     // untuk mengubah harga menjadi rupiah cth: Rp. 15.000.000
     function formatRupiah(angka, prefix){

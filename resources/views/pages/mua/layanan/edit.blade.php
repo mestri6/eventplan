@@ -29,11 +29,10 @@
                     <div class="row mb-3" id="gambarLama">
                         @forelse ($gallery as $item)
                         <div class="col-6 col-md-3 mb-3">
-                            <figure class="figure gallery-container mb-3">
+                            <figure class="figure gallery-container mb-3"> 
                                 <img src="{{ Storage::url($item->thumbnail) }}"
                                     class="w-100 img-fluid figure-img img-thumbnail" alt="" />
-                                <a href="javascript:void(0)" onclick="hapusGambar({{ $item->id }});"
-                                    class="delete-gallery">
+                                <a href="javascript:void(0)" onclick="hapusGambar({{ $item->id }});" class="delete-gallery">
                                     <img src="{{ asset('assets/images/ic_delete.svg') }}" class="img-fluid w-75 h-75"
                                         alt="icon-delete" />
                                 </a>
@@ -63,6 +62,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-5">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="deskripsi">Isi Deskripsi Layanan</label>
+                                <textarea name="deskripsi" class="ckeditor form-control">
+                                    {{ $item->layanan->deskripsi }}
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
                     <div class="d-grid gap-2 d-flex">
                         <a href="{{ route('layanan-mua.index') }}" class="btn btn-danger col">Batal</a>
                         <button type="submit" class="btn btn-primary col" id="btnSave">Update</button>
@@ -77,6 +86,64 @@
 
 @push('after-script')
 <script>
+    $('#tb_layanan').DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        dom: 'lBfrtip',
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        buttons: [
+            {
+            extend: 'copy',
+            text: 'Copy',
+            className: 'btn btn-primary',
+            exportOptions: {
+            columns: [1, 2, 3, 4]
+            }
+            },
+            {
+            extend: 'csv',
+            text: 'CSV',
+            className: 'btn btn-primary',
+            exportOptions: {
+            columns: [1, 2, 3, 4]
+            }
+            },
+            {
+            extend: 'excel',
+            text: 'Excel',
+            className: 'btn btn-primary',
+            exportOptions: {
+            columns: [1, 2, 3, 4]
+            }
+            },
+            {
+            extend: 'pdf',
+            text: 'PDF',
+            className: 'btn btn-primary',
+            exportOptions: {
+            columns: [1, 2, 3, 4]
+            }
+            },
+            {
+            extend: 'print',
+            text: 'Print',
+            className: 'btn btn-primary',
+            exportOptions: {
+            columns: [1, 2, 3, 4]
+            }
+            }
+        ],
+        ordering: [[1, 'asc']],
+        ajax: {
+            url: "{!! url()->current() !!}",
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'action', name: 'action', orderable: false, searchable: false },
+        ],
+    });
 
     $('#harga').val(formatRupiah($('#harga').val(), 'Rp. '));
 
@@ -115,7 +182,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "{{ url('/mua/layanan-mua/delete-gallery') }}/" + id,
+                    url: "{{ url('/wo/layanan-wo/delete-gallery') }}/" + id,
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -163,7 +230,6 @@
     .gallery-container {
         position: relative;
     }
-
     .gallery-container .delete-gallery {
         position: absolute;
         top: 0;

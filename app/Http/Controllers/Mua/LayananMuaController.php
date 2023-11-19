@@ -62,14 +62,16 @@ class LayananMuaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $data['users_id'] = Auth::user()->id;
-        $data['slug'] = Str::slug($request->nama_paket);
-        $data['harga'] = str_replace(['Rp. ', '.'], ['', ''], $request->harga); 
 
-        $item = Layanan::create($data);
+        $item = Layanan::create([
+            'nama_paket' => $request->nama_paket,
+            'users_id' => Auth::user()->id,
+            'slug' => Str::slug($request->nama_paket),
+            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga),
+            'deskripsi' => $request->deskripsi
+        ]);
 
-        // jika ada request thumbnail lpooping dan masukan data kedalam layanan galery
+        // jika ada request thumbnail looping dan masukan data kedalam layanan galery
         if ($request->hasFile('thumbnail')) {
             // script ini akan menampilkan error jika foto yang di inputkan lebih dari 4
             if (count($request->file('thumbnail')) > 4) {
@@ -78,7 +80,7 @@ class LayananMuaController extends Controller
             } else {
                 // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
                 foreach ($request->file('thumbnail') as $file) {
-                    $data = GaleryLayanan::create([
+                    GaleryLayanan::create([
                         'layanan_id' => $item->id,
                         'thumbnail' => $file->store('assets/layanan', 'public')
                     ]);
@@ -93,6 +95,7 @@ class LayananMuaController extends Controller
             Alert::error('Error', 'Data Gagal Ditambahkan');
             return back();
         }
+
     }
 
     /**
@@ -119,7 +122,7 @@ class LayananMuaController extends Controller
     public function update(Request $request, string $id)
     {
         $item = Layanan::findOrFail($id);
-        // jika file thumbnail ada maka looping file thumbnail dan simpan
+        // jika file thumbnail ada dan kalau gambarnya lebih dari 4 dia tidak akan menyimpan data dan akan menampilkan error
         if ($request->hasFile('thumbnail')) {
             // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
             foreach ($request->file('thumbnail') as $file) {
@@ -134,7 +137,8 @@ class LayananMuaController extends Controller
             'nama_paket' => $request->nama_paket,
             'users_id' => Auth::user()->id,
             'slug' => Str::slug($request->nama_paket),
-            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga)
+            'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga),
+            'deskripsi' => $request->deskripsi
         ]);
 
         if ($simpan) {
@@ -151,15 +155,37 @@ class LayananMuaController extends Controller
      */
     public function destroy(string $id)
     {
-        // hapus data layanan ambil berdasarkan id
         $item = Layanan::findOrFail($id);
+        $gallery = GaleryLayanan::where('layanan_id', $id)->get();
 
-        if ($item->delete()) {
+        foreach ($gallery as $galery) {
+            Storage::disk('public')->delete($galery->thumbnail);
+
+            $galery->forceDelete();
+        }
+
+        // ini digunakan untuk menghapus data secara permanen
+        $hapusLayanan = $item->forceDelete();
+
+        if ($hapusLayanan) {
             Alert::success('Success', 'Data Berhasil Dihapus');
             return redirect()->route('layanan-mua.index');
         } else {
             Alert::error('Error', 'Data Gagal Dihapus');
             return back();
         }
+    }
+
+    public function deleteGallery(Request $request, $id)
+    {
+        $item = GaleryLayanan::findOrFail($id);
+        Storage::disk('public')->delete($item->thumbnail);
+        $item->forceDelete();
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Foto Berhasil Dihapus'
+        ]);
     }
 }

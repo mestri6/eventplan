@@ -68,6 +68,7 @@ Route::prefix('mua')
     ->group(function () {
         Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
         Route::delete('/layanan-mua/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('mua-delete-gallery-layanan');
+        
         Route::resource('layanan-mua', LayananMuaController::class);
         Route::resource('akun-mua', AkunMuaController::class);
     });
