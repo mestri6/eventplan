@@ -39,7 +39,7 @@ class TransaksiCustomerController extends Controller
                     if($item->status_pembayaran == 'success'){
                         return '
                             <div class="d-flex">
-                                <a href="' . route('transaksi-customer.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
+                                <a href="' . route('customer.detail-transaksi', $item->id) . '" class="btn btn-sm btn-primary mx-2">
                                 <i class="fa fa-eye"></i>
                             </a>
                             <button class="btn btn-success text-white mx-2" disabled>Selesai Diproses</button>
