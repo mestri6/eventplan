@@ -12,10 +12,12 @@
             <a href="/" class="nav-item nav-link">Tentang</a>
             <a href="/" class="nav-item nav-link">Layanan</a>
             <a href="/" class="nav-item nav-link">Kontak</a>
-            <a href="{{ route('cart') }}" class="nav-item nav-link {{ request()->is('cart') ? 'active' : '' }}">
-                <i class="fa fa-shopping-cart active"></i>
-                <span class="badge bg-danger rounded-pill">{{ $countCart ?? 0 }}</span>
-            </a>
+            @auth
+                <a href="{{ route('cart') }}" class="nav-item nav-link {{ request()->is('cart') ? 'active' : '' }}">
+                    <i class="fa fa-shopping-cart active"></i>
+                    <span class="badge bg-danger rounded-pill">{{ $countCart }}</span>
+                </a>
+            @endauth
         </div>
         @guest
             <a href="{{ route('register') }}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Daftar Sekarang<i
