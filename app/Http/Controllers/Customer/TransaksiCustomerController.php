@@ -135,7 +135,7 @@ class TransaksiCustomerController extends Controller
 
     public function detailTransaksi($id)
     {
-        $item = Transaction::findOrFail($id);
+        $item = Transaction::with('layanan')->findOrFail($id);
         return view('pages.customer.transaksi-detail', compact('item'));
     }
 }
