@@ -13,9 +13,14 @@
             <a href="/" class="nav-item nav-link">Layanan</a>
             <a href="/" class="nav-item nav-link">Kontak</a>
             @auth
+            @php
+                $countCart = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
+            @endphp
                 <a href="{{ route('cart') }}" class="nav-item nav-link {{ request()->is('cart') ? 'active' : '' }}">
                     <i class="fa fa-shopping-cart active"></i>
-                    <span class="badge bg-danger rounded-pill">{{ $countCart }}</span>
+                    @if ($countCart > 0)
+                        <span class="badge bg-danger rounded-pill">{{ $countCart }}</span>
+                    @endif
                 </a>
             @endauth
         </div>
