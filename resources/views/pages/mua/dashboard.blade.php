@@ -10,11 +10,10 @@
       <div class="card-body">
         <img src="{{ asset('assets/images/dashboard/circle.svg') }}" class="card-img-absolute" alt="circle-image" />
         <h4 class="font-weight-normal mb-3">
-          Weekly Sales
+          Pendapatan
           <i class="mdi mdi-chart-line mdi-24px float-right"></i>
         </h4>
-        <h2 class="mb-5">$ 15,0000</h2>
-        <h6 class="card-text">Increased by 60%</h6>
+        <h2 class="mb-5">Rp. {{ number_format($income) }}</h2>
       </div>
     </div>
   </div>
@@ -23,11 +22,10 @@
       <div class="card-body">
         <img src="{{ asset('assets/images/dashboard/circle.svg') }}" class="card-img-absolute" alt="circle-image" />
         <h4 class="font-weight-normal mb-3">
-          Weekly Orders
+          Total Orders
           <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
         </h4>
-        <h2 class="mb-5">45,6334</h2>
-        <h6 class="card-text">Decreased by 10%</h6>
+        <h2 class="mb-5">{{ $countOrder }}</h2>
       </div>
     </div>
   </div>
@@ -36,11 +34,10 @@
       <div class="card-body">
         <img src="{{ asset('assets/images/dashboard/circle.svg') }}" class="card-img-absolute" alt="circle-image" />
         <h4 class="font-weight-normal mb-3">
-          Jumlah Layanan
+          Layanan
           <i class="mdi mdi-diamond mdi-24px float-right"></i>
         </h4>
         <h2 class="mb-5">{{ $layanan }}</h2>
-        {{-- <h6 class="card-text">Increased by 5%</h6> --}}
       </div>
     </div>
   </div>
