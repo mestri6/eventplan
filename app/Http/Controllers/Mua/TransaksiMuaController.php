@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Mua;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiMuaController extends Controller
 {
@@ -12,7 +15,53 @@ class TransaksiMuaController extends Controller
      */
     public function index()
     {
-        //
+        if (request()->ajax()) {
+            $query = Transaction::whereHas('layanan', function ($query) {
+                $query->where('users_id', Auth::user()->id);
+            })->get();
+
+            return datatables()->of($query)
+                ->addIndexColumn()
+                ->editColumn('created_at', function ($item) {
+                    return Carbon::parse($item->created_at)->isoFormat('dddd, D MMMM Y');
+                })
+                ->editColumn('users_id', function ($item) {
+                    return $item->user->name ?? '-';
+                })
+                ->editColumn('status_pembayaran', function ($item) {
+                    if ($item->status_pembayaran == 'pending') {
+                        return '<span class="badge badge-warning">' . $item->status_pembayaran . '</span>';
+                    } elseif ($item->status_pembayaran == 'success') {
+                        return '<span class="badge badge-success">' . $item->status_pembayaran . '</span>';
+                    } elseif ($item->status_pembayaran == 'failed') {
+                        return '<span class="badge badge-danger">' . $item->status_pembayaran . '</span>';
+                    }
+                })
+                ->editColumn('action', function ($item) {
+                    if ($item->status_pembayaran == 'success') {
+                        return '
+                            <div class="d-flex">
+                                <a href="' . route('transaksi-wo.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <button class="btn btn-success text-white mx-2" disabled>Selesai Diproses</button>
+                            </div>
+                        ';
+                    } else {
+                        return '
+                            <div class="d-flex">
+                                <a href="' . route('transaksi-wo.show', $item->id) . '" class="btn btn-sm btn-primary">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <button class="btn btn-warning text-white" disabled>Sedang Diproses</button>
+                            </div>
+                        ';
+                    }
+                })
+                ->rawColumns(['alamat', 'thumbnail', 'action', 'status_pembayaran'])
+                ->make(true);
+        }
+        return view('pages.mua.transaksi.index');
     }
 
     /**
