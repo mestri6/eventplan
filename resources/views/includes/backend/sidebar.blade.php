@@ -132,6 +132,15 @@
 				<i class="mdi mdi-file-image menu-icon"></i>
 			</a>
 		</li>
+
+		<li class="nav-item">
+			<a class="nav-link {{ (request()->is('mua/transaksi-mua') ? 'active' : '') }}"
+				href="{{ route('transaksi-mua.index') }}">
+				<span class="menu-title">Transaksi</span>
+				<i class="mdi mdi-credit-card-multiple menu-icon"></i>
+			</a>
+		</li>
+
 		<li class="nav-item">
 			<a class="nav-link {{ (request()->is('mua/akun') ? 'active' : '') }}" href="{{ route('akun-mua.index') }}">
 				<span class="menu-title">Akun</span>

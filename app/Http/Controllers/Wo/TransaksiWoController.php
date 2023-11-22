@@ -85,7 +85,10 @@ class TransaksiWoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $item = Transaction::with(['user'])->findOrFail($id);
+        return view('pages.wo.transaksi.show', [
+            'item' => $item
+        ]);
     }
 
     /**

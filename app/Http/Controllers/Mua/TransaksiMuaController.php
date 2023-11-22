@@ -41,7 +41,7 @@ class TransaksiMuaController extends Controller
                     if ($item->status_pembayaran == 'success') {
                         return '
                             <div class="d-flex">
-                                <a href="' . route('transaksi-wo.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
+                                <a href="' . route('transaksi-mua.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
                                 <i class="fa fa-eye"></i>
                             </a>
                             <button class="btn btn-success text-white mx-2" disabled>Selesai Diproses</button>
@@ -50,7 +50,7 @@ class TransaksiMuaController extends Controller
                     } else {
                         return '
                             <div class="d-flex">
-                                <a href="' . route('transaksi-wo.show', $item->id) . '" class="btn btn-sm btn-primary">
+                                <a href="' . route('transaksi-mua.show', $item->id) . '" class="btn btn-sm btn-primary">
                                 <i class="fa fa-eye"></i>
                             </a>
                             <button class="btn btn-warning text-white" disabled>Sedang Diproses</button>
@@ -85,7 +85,10 @@ class TransaksiMuaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $item = Transaction::with(['user'])->findOrFail($id);
+        return view('pages.mua.transaksi.show', [
+            'item' => $item
+        ]);
     }
 
     /**

@@ -13,6 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mua\AkunMuaController;
 use App\Http\Controllers\Mua\DashboardMuaController;
 use App\Http\Controllers\Mua\LayananMuaController;
+use App\Http\Controllers\Mua\TransaksiMuaController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\Wo\AkunWoController;
 use App\Http\Controllers\Wo\DashboardWoController;
@@ -69,7 +70,9 @@ Route::prefix('mua')
         Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
         Route::delete('/layanan-mua/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('mua-delete-gallery-layanan');
         
+
         Route::resource('layanan-mua', LayananMuaController::class);
+        Route::resource('transaksi-mua', TransaksiMuaController::class);
         Route::resource('akun-mua', AkunMuaController::class);
     });
 

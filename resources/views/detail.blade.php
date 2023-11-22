@@ -47,15 +47,22 @@
                     <h3>
                         <form action="{{ route('cart-add', $item->id) }}" method="POST">
                             @csrf
-                            @if ($item->user->id == Auth::user()->id)
+                            @auth
+                                @if ($item->user->id == Auth::user()->id)
                                 <button class="btn btn-checkout" disabled>
                                     <i class="bi bi-cart-plus"></i>
                                 </button>
-                            @else
+                                @else
                                 <button type="submit" class="btn btn-checkout">
-                                    Pesan Sekarang
+                                    <i class="bi bi-cart-plus"></i>
                                 </button>
-                            @endif
+                                @endif
+                            @endauth
+                            @guest
+                            <a href="{{ route('login') }}" class="btn btn-checkout">
+                                <i class="bi bi-cart-plus"></i>
+                            </a>
+                            @endguest
                         </form>
                     </h3>
                 </div>
@@ -75,8 +82,7 @@
             <div class="checkout ms-3 mt-5">
                 <form action="{{ route('cart-add', $item->id) }}" method="POST">
                     @csrf
-                    <form action="{{ route('cart-add', $item->id) }}" method="POST">
-                        @csrf
+                    @auth
                         @if ($item->user->id == Auth::user()->id)
                         <button class="btn btn-checkout" disabled>
                             Pesan Sekarang
@@ -86,7 +92,12 @@
                             Pesan Sekarang
                         </button>
                         @endif
-                    </form>
+                    @endauth
+                    @guest
+                    <a href="{{ route('login') }}" class="btn btn-checkout">
+                        Pesan Sekarang
+                    </a>
+                    @endguest
                 </form>
             </div>
         </div>
