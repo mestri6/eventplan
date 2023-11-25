@@ -22,7 +22,7 @@ class HomeController extends Controller
             $cekIdLayananTransaction[] = $item->id;
         }
 
-        $cekId = Transaction::where('layanan_id', $cekIdLayananTransaction)->get();
+        $cekId = Transaction::where('layanan_id', $cekIdLayananTransaction)->first();
 
 
         return view('home', compact('layanan', 'cekIdLayananTransaction', 'cekId'));

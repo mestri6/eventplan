@@ -216,8 +216,8 @@
                             @endif
                         </div>
                         <div class="bg-light rounded p-4 pt-5 mt-n5">
-                            @foreach ($cekId as $cekLayanan)
-                                @if ($item->id == $cekLayanan->layanan_id)
+                            {{-- @foreach ($cekId as $cekLayanan) --}}
+                                @if ($item->id == $cekId->layanan_id)
                                     <p class="d-block text-center h3 mt-3 mb-4" href="#">
                                         {{ $item->nama_paket }}
                                     </p>
@@ -226,7 +226,7 @@
                                         {{ $item->nama_paket }}
                                     </a>
                                 @endif
-                            @endforeach
+                            {{-- @endforeach --}}
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="d-flex align-items-center">
                                     <img class="rounded-circle flex-shrink-0" src="{{ asset('frontend/img/user.jpg') }}" alt=""
@@ -238,8 +238,8 @@
                                     </div>
                                 </div>
                                 
-                                @foreach ($cekId as $cekLayanan)
-                                    @if ($item->id == $cekLayanan->layanan_id)
+                                {{-- @foreach ($cekId as $cekLayanan) --}}
+                                    @if ($item->id == $cekId->layanan_id)
                                         <span class="bg-danger text-white rounded-pill py-2 px-3" href="">
                                             Sold Out
                                         </span>
@@ -248,7 +248,7 @@
                                             Rp.{{ number_format($item->harga) }}
                                         </span>
                                         @endif
-                                    @endforeach
+                                    {{-- @endforeach --}}
                             </div>
                         </div>
                     </div>
