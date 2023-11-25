@@ -19,6 +19,6 @@ class DashboardMuaController extends Controller
         $countOrder = Transaction::whereHas('layanan', function ($layanan) {
             $layanan->where('users_id', Auth::user()->id)->where('status_pembayaran', 'success');
         })->count();
-        return view('pages.mua.dashboard', compact('layanan'));
+        return view('pages.mua.dashboard', compact('layanan', 'income', 'countOrder'));
     }
 }

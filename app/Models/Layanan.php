@@ -26,4 +26,9 @@ class Layanan extends Model
     {
         return $this->hasMany(GaleryLayanan::class, 'layanan_id', 'id');
     }
+
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class, 'layanan_id', 'id');
+    }
 }
