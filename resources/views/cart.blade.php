@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <form action="{{ route('checkout') }}" method="POST">
+    <form action="{{ route('checkout') }}" id="form-checkout" method="POST">
         <div class="row mt-5">
             @csrf
             <div class="col-12 col-lg-12">
@@ -111,7 +111,7 @@
             <div class="d-grid mb-5 mt-5">
                 <input type="hidden" name="total_pembayaran" value="{{ $totalPembayaran }}">
                 <input type="hidden" name="kode_unik" value="{{ $kodeUnik }}">
-                <button type="submit" class="btn btn-checkout">Pesan Sekarang</button>
+                <button type="submit" class="btn btn-checkout" id="btnSubmit">Pesan Sekarang</button>
             </div>
         </div>
     </form>
@@ -176,6 +176,45 @@
         ],
     });
 </script>
+
+<script>
+        $('#form-checkout').submit(function(e){
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            var method = form.attr('method');
+            var data = form.serialize();
+            $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                beforeSend: function() {
+                    $(".preloader").fadeIn();
+                },
+                success: function(res){
+                    if(res.status == 'error'){
+                        Swal.fire({
+                            title: "Gagal!",
+                            text: res.message,
+                            icon: "error"
+                        });
+                    }else{
+                        Swal.fire({
+                            title: "Berhasil!",
+                            text: res.message,
+                            icon: "success"
+                        }).then(function() {
+                            window.location = "{{ route('transaksi-customer.index') }}";
+                        });
+                    }
+                },
+                complete: function(){
+                    $(".preloader").fadeOut();
+                }
+            });
+        });
+</script>
+
 @endpush
 
 @push('after-style')

@@ -17,26 +17,27 @@ class HomeController extends Controller
 
         $layanan = Layanan::with(['galleries', 'user'])->get();
 
-        $cekIdLayananTransaction = [];
-        foreach ($layanan as $item) {
-            $cekIdLayananTransaction[] = $item->id;
-        }
+        // $cekIdLayananTransaction = [];
+        // foreach ($layanan as $item) {
+        //     $cekIdLayananTransaction[] = $item->id;
+        // }
 
-        $cekId = Transaction::where('layanan_id', $cekIdLayananTransaction)->first();
+        // $cekId = Transaction::where('layanan_id', $cekIdLayananTransaction)->first();
 
 
-        return view('home', compact('layanan', 'cekIdLayananTransaction', 'cekId'));
+        // return view('home', compact('layanan', 'cekIdLayananTransaction', 'cekId'));
+        return view('home', compact('layanan'));
     }
 
     public function detailLayanan(Request $request, $id)
     {
 
         $item = Layanan::with(['galleries', 'user'])->where('slug', $id)->firstOrFail();
-        $cekId = Transaction::where('layanan_id', $item->id)->first();
+        // $cekId = Transaction::where('layanan_id', $item->id)->first();
 
-        if ($cekId) {
-            return abort(404);
-        }
+        // if ($cekId) {
+        //     return abort(404);
+        // }
 
         
         return view('detail', [

@@ -216,17 +216,9 @@
                             @endif
                         </div>
                         <div class="bg-light rounded p-4 pt-5 mt-n5">
-                            {{-- @foreach ($cekId as $cekLayanan) --}}
-                                @if ($item->id == $cekId->layanan_id)
-                                    <p class="d-block text-center h3 mt-3 mb-4" href="#">
-                                        {{ $item->nama_paket }}
-                                    </p>
-                                    @else
-                                    <a class="d-block text-center h3 mt-3 mb-4" href="{{ route('detail', $item->slug) }}">
-                                        {{ $item->nama_paket }}
-                                    </a>
-                                @endif
-                            {{-- @endforeach --}}
+                            <a class="d-block text-center h3 mt-3 mb-4" href="{{ route('detail', $item->slug) }}">
+                                {{ $item->nama_paket }}
+                            </a>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="d-flex align-items-center">
                                     <img class="rounded-circle flex-shrink-0" src="{{ asset('frontend/img/user.jpg') }}" alt=""
@@ -235,20 +227,12 @@
                                         <h6 class="text-primary mb-1">
                                             {{ $item->user->name }}
                                         </h6>
+                                        {{-- <small>Teacher</small> --}}
                                     </div>
                                 </div>
-                                
-                                {{-- @foreach ($cekId as $cekLayanan) --}}
-                                    @if ($item->id == $cekId->layanan_id)
-                                        <span class="bg-danger text-white rounded-pill py-2 px-3" href="">
-                                            Sold Out
-                                        </span>
-                                        @else
-                                        <span class="bg-primary text-white rounded-pill py-2 px-3" href="">
-                                            Rp.{{ number_format($item->harga) }}
-                                        </span>
-                                        @endif
-                                    {{-- @endforeach --}}
+                                <span class="bg-primary text-white rounded-pill py-2 px-3" href="">
+                                    Rp.{{ number_format($item->harga) }}
+                                </span>
                             </div>
                         </div>
                     </div>
