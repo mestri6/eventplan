@@ -40,7 +40,7 @@
             <div class="d-flex name-store">
                 <div class="flex-grow-1 ms-3 py-1">
                     <h3>
-                        Dekorasi Pernikahan
+                        {{ $item->nama_paket }}
                     </h3>
                 </div>
                 <div class="flex-grow-1 ms-3 py-1 text-end">
@@ -74,9 +74,7 @@
             </div>
             <div class="deskripsi ms-3">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, qui! Porro ea consequatur debitis
-                    perspiciatis, necessitatibus velit asperiores rerum magnam. Quia eos rem iure facilis beatae ipsum
-                    temporibus numquam nam omnis optio at dolor enim est eius ullam minima blanditiis.
+                    {!! $item->deskripsi !!}
                 </p>
             </div>
             <div class="checkout ms-3 mt-5">
