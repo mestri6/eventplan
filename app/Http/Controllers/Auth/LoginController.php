@@ -70,6 +70,7 @@ class LoginController extends Controller
 
         // Validasi Login
         $credentials = $request->only('email', 'password');
+        dd($credentials);
         if (Auth::attempt($credentials)) {
             if(Auth::user()->role == 'Admin'){
                 return redirect()->route('admin.dashboard');
