@@ -58,7 +58,7 @@ class LoginController extends Controller
         $client = new Client();
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => array(
-                'secret' => env('RECAPTCHA_SECRET_KEY'),
+                'secret' => config('recaptcha.api_secret_key'),
                 'response' => $request->input('g-recaptcha-response')
             )
         ]);
@@ -70,7 +70,6 @@ class LoginController extends Controller
 
         // Validasi Login
         $credentials = $request->only('email', 'password');
-        dd($credentials);
         if (Auth::attempt($credentials)) {
             if(Auth::user()->role == 'Admin'){
                 return redirect()->route('admin.dashboard');
