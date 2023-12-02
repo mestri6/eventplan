@@ -49,11 +49,12 @@
                                     </div>
                                     <div class="recaptca" style="margin-top: 30px;">
                                         {!! htmlFormSnippet() !!}
-                                        @error('g-recaptcha-response')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+
+                                        @if ($errors->has('g-recaptcha-response'))
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
                                         </span>
-                                        @enderror
+                                        @endif
                                     </div>
                                     <div class="text-center">
                                         <button type="submit"

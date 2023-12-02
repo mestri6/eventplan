@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -42,7 +44,35 @@ class LoginController extends Controller
         }else{
             return abort(404);
         }
+    }
 
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|string|email|max:100',
+            'password' => 'required|string|min:8',
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
+
+        // Validasi reCAPTCHA
+        $client = new Client();
+        $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => array(
+                'secret' => 'YOUR_SECRET_KEY',
+                'response' => $request->input('g-recaptcha-response')
+            )
+        ]);
+
+        $body = json_decode((string) $response->getBody());
+        if (!$body->success) {
+            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+        }
+
+        // Validasi Login
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/');
+        }
     }
 
     /**
