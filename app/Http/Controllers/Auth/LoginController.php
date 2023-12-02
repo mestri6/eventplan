@@ -58,7 +58,7 @@ class LoginController extends Controller
         $client = new Client();
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => array(
-                'secret' => 'YOUR_SECRET_KEY',
+                'secret' => env('RECAPTCHA_SECRET_KEY'),
                 'response' => $request->input('g-recaptcha-response')
             )
         ]);
