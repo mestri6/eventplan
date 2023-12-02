@@ -71,7 +71,19 @@ class LoginController extends Controller
         // Validasi Login
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/');
+            if(Auth::user()->role == 'Admin'){
+                return redirect()->route('admin.dashboard');
+            }elseif(Auth::user()->role == 'Wo'){
+                return redirect()->route('wo.dashboard');
+            }elseif(Auth::user()->role == 'Mua'){
+                return redirect()->route('mua.dashboard');
+            }elseif(Auth::user()->role == 'Customer'){
+                return redirect()->route('customer.dashboard');
+            }else{
+                return abort(404);
+            }
+        }else{
+            return redirect()->route('login')->with('error', 'Email atau Password salah!');
         }
     }
 
