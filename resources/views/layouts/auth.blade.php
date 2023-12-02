@@ -9,6 +9,7 @@
     <title>
         @yield('title')
     </title>
+    {!! htmlScriptTagJsApi() !!}
     @include('includes.auth.styles')
 </head>
 

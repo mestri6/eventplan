@@ -47,6 +47,14 @@
                                             old('remember') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="rememberMe">Ingat Saya</label>
                                     </div>
+                                    <div class="recaptca" style="margin-top: 30px;">
+                                        {!! htmlFormSnippet() !!}
+                                        @error('g-recaptcha-response')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                     <div class="text-center">
                                         <button type="submit"
                                             class="btn btn-lg btn-warning btn-lg w-100 mt-4 mb-0">Masuk
