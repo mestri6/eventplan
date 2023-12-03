@@ -64,12 +64,8 @@ class CheckoutController extends Controller
         $midtrans_params = [
             'transaction_details' => $transaction_details,
             'customer_details' => $customer_details[0],
-            'payment' => [
-                'gopay' => [
-                    'enable_callback' => true,
-                    'callback_url' => route('pembayaran-success-store'),
-                ],
-            ],
+            'enabled_payments' => ['bank_transfer'],
+            'vtweb' => []
         ];
 
         try {
