@@ -28,10 +28,10 @@ class KategoriController extends Controller
                 })
                 ->editColumn('action', function ($item) {
                     return '
-                        <a href="' . route('kategori.edit', $item->id) . '" class="btn btn-sm btn-primary">
+                        <a href="' . route('kategori.edit', $item->id_kategori_layanan) . '" class="btn btn-sm btn-primary">
                             <i class="fa fa-pencil-alt"></i>
                         </a>
-                        <form action="' . route('kategori.destroy', $item->id) . '" method="POST" style="display: inline-block;">
+                        <form action="' . route('kategori.destroy', $item->id_kategori_layanan) . '" method="POST" style="display: inline-block;">
                             ' . method_field('delete') . csrf_field() . '
                             <button type="submit" class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash"></i>

@@ -44,8 +44,8 @@
             url: "{!! url()->current() !!}",
         },
         columns: [
-            { data: 'DT_RowIndex', name: 'id' },
-            { data: 'nama', name: 'nama' },
+            { data: 'DT_RowIndex', name: 'id_kategori_layanan' },
+            { data: 'nama_kategori_layanan', name: 'nama_kategori_layanan' },
             { data: 'created_at', name: 'created_at' },
             { data: 'updated_at', name: 'updated_at' },
             { data: 'action', name: 'action', orderable: false, searchable: false },

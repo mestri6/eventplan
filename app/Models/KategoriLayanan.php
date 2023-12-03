@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class KategoriLayanan extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $table = 'kategori_layanans';
-    protected $primaryKey = 'id';
+    protected $table = 'kategori_layanan';
+    protected $primaryKey = 'id_kategori_layanan';
 
     protected $guarded = [
-        'id',
+        'id_kategori_layanan',
     ];
 }

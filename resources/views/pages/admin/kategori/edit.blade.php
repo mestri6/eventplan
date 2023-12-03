@@ -8,16 +8,16 @@
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('kategori.update', $data->id) }}" method="POST" enctype="multipart/form-data"
+                <form action="{{ route('kategori.update', $data->id_kategori_layanan) }}" method="POST" enctype="multipart/form-data"
                     id="form-kategori">
                     @csrf
                     @method('PUT')
                     <div class="row">
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
-                                <label for="nama">Nama Kategori</label>
-                                <input type="text" name="nama" id="nama" class="form-control"
-                                    value="{{ $data->nama }}">
+                                <label for="nama_kategori_layanan">Nama_kategori_layanan Kategori</label>
+                                <input type="text" name="nama_kategori_layanan" id="nama_kategori_layanan" class="form-control"
+                                    value="{{ $data->nama_kategori_layanan }}">
                             </div>
                         </div>
                     </div>

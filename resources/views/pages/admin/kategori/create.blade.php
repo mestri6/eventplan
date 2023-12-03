@@ -14,8 +14,8 @@
                     <div class="row">
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
-                                <label for="nama">Nama Kategori</label>
-                                <input type="text" name="nama" id="nama" class="form-control"
+                                <label for="nama_kategori_layanan">Nama Kategori</label>
+                                <input type="text" name="nama_kategori_layanan" id="nama_kategori_layanan" class="form-control"
                                     placeholder="Masukkan Nama Kategori" required>
                             </div>
                         </div>
