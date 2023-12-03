@@ -93,7 +93,7 @@ Route::prefix('customer')
 
 
 Route::get('pembayaran/success', [CheckoutController::class, 'callback'])->name('pembayaran-success');
-Route::post('pembayaran/success', [CheckoutController::class, 'callback']);
+Route::post('pembayaran/success', [CheckoutController::class, 'callback'])->name('pembayaran-success-store');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');

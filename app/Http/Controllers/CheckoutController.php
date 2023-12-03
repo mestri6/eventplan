@@ -67,7 +67,7 @@ class CheckoutController extends Controller
             'payment' => [
                 'gopay' => [
                     'enable_callback' => true,
-                    'callback_url' => route('midtrans.callback'),
+                    'callback_url' => route('pembayaran-success-store'),
                 ],
             ],
         ];
