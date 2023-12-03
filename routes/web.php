@@ -92,8 +92,10 @@ Route::prefix('customer')
     });
 
 
+// midtrans
+Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('midtrans-callback');
 Route::get('pembayaran/success', [CheckoutController::class, 'callback'])->name('pembayaran-success');
-Route::post('pembayaran/success', [CheckoutController::class, 'callback'])->name('pembayaran-success-store');
+Route::post('pembayaran/success', [CheckoutController::class, 'callback']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
