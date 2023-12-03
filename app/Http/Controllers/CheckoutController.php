@@ -84,12 +84,12 @@ class CheckoutController extends Controller
     public function callback(Request $request)
     {
 
-        $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->order_id);
+        $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->id_order);
 
         $transaction_status = $notif->status_pembayaran;
         $fraud = $notif->fraud_status;
 
-        $transaction_id = explode('-', $notif->order_id)[0];
+        $transaction_id = explode('-', $notif->id_order)[0];
         $transaction = Transaction::find($transaction_id);
 
         if ($transaction_status == 'capture') {
