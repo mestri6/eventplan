@@ -11,19 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-            $table->string('layanan_id');
-            $table->string('users_id');
+        Schema::create('transaksi', function (Blueprint $table) {
+            $table->id('id_transaksi');
+            $table->string('id_layanan');
+            $table->string('id_user');
             $table->date('tanggal_acara');
             $table->string('alamat');
-            $table->enum('status_pembayaran', ['pending', 'success', 'failed'])->default('pending');
-            // $table->enum('type_pembayaran', ['DP', 'Lunas']);
+            $table->enum('status_pembayaran', ['tertunda', 'berhasil', 'gagal'])->default('tertunda');
             $table->string('bukti_pembayaran')->nullable();
             $table->string('kode_unik')->nullable();
             $table->integer('total_pembayaran')->nullable();
-            // $table->integer('is_dp')->nullable();
-            // $table->integer('is_lunas')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transaksi');
     }
 };

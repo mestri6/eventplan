@@ -66,7 +66,7 @@
                                 <select name="id_kategori_layanan" id="id_kategori_layanan" class="form-control-sm w-100" required>
                                     <option value="">-- Pilih Kategori Akun --</option>
                                     @foreach ($kategori as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->nama_kategori_layanan }}</option>
                                     @endforeach
                                 </select>
                             </div>

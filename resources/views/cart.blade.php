@@ -169,8 +169,8 @@
             url: "{!! url()->current() !!}",
         },
         columns: [
-            { data: 'DT_RowIndex', name: 'id' },
-            { data: 'layanan_id', name: 'layanan_id' },
+            { data: 'DT_RowIndex', name: 'id_keranjang' },
+            { data: 'id_layanan', name: 'id_layanan' },
             { data: 'total_harga', name: 'total_harga' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],

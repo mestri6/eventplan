@@ -14,8 +14,8 @@ class DashboardCustomerController extends Controller
 {
     public function index()
     {
-        $totalTransaksi = Transaction::where('users_id', Auth::user()->id)->sum('total_pembayaran');
-        $totalOrder = Transaction::where('users_id', Auth::user()->id)->count();
+        $totalTransaksi = Transaction::where('id_user', Auth::user()->id)->sum('total_pembayaran');
+        $totalOrder = Transaction::where('id_user', Auth::user()->id)->count();
         return view('pages.customer.dashboard', compact('totalTransaksi', 'totalOrder'));
     }
 

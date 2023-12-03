@@ -40,12 +40,12 @@
             <div class="d-flex name-store">
                 <div class="flex-grow-1 ms-3 py-1">
                     <h3>
-                        {{ $item->nama_paket }}
+                        {{ $item->nama_layanan }}
                     </h3>
                 </div>
                 <div class="flex-grow-1 ms-3 py-1 text-end">
                     <h3>
-                        <form action="{{ route('cart-add', $item->id) }}" method="POST">
+                        <form action="{{ route('cart-add', $item->id_layanan) }}" method="POST">
                             @csrf
                             @auth
                                 @if ($item->user->id == Auth::user()->id)
@@ -78,7 +78,7 @@
                 </p>
             </div>
             <div class="checkout ms-3 mt-5">
-                <form action="{{ route('cart-add', $item->id) }}" method="POST">
+                <form action="{{ route('cart-add', $item->id_layanan) }}" method="POST">
                     @csrf
                     @auth
                         @if ($item->user->id == Auth::user()->id)

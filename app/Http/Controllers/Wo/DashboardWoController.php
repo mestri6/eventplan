@@ -13,12 +13,12 @@ class DashboardWoController extends Controller
     public function index()
     {
         // untuk menghitung layanan yang di miliki oleh pemilik akun
-        $layanan = Layanan::where('users_id', Auth::user()->id)->count();
+        $layanan = Layanan::where('id_user', Auth::user()->id)->count();
         $income = Transaction::whereHas('layanan', function ($layanan) {
-            $layanan->where('users_id', Auth::user()->id)->where('status_pembayaran', 'success');
+            $layanan->where('id_user', Auth::user()->id)->where('status_pembayaran', 'berhasil');
         })->sum('total_pembayaran');
         $countOrder = Transaction::whereHas('layanan', function ($layanan) {
-            $layanan->where('users_id', Auth::user()->id)->where('status_pembayaran', 'success');
+            $layanan->where('id_user', Auth::user()->id)->where('status_pembayaran', 'berhasil');
         })->count();
         return view('pages.wo.dashboard', compact('layanan', 'income', 'countOrder'));
     }

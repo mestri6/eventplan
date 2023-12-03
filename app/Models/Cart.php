@@ -10,25 +10,25 @@ class Cart extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'carts';
-    protected $primaryKey = 'id';
+    protected $table = 'keranjang';
+    protected $primaryKey = 'id_keranjang';
 
     protected $guarded = [
-        'id',
+        'id_keranjang',
     ];
 
     public function layanan()
     {
-        return $this->belongsTo(Layanan::class, 'layanan_id', 'id');
+        return $this->belongsTo(Layanan::class, 'id_layanan', 'id_layanan');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id', 'id');
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
     public function transaksi()
     {
-        return $this->hasOne(Transaksi::class, 'carts_id', 'id');
+        return $this->hasOne(Transaksi::class, 'id_keranjang', 'id');
     }
 }

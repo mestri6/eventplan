@@ -217,7 +217,7 @@
                         </div>
                         <div class="bg-light rounded p-4 pt-5 mt-n5">
                             <a class="d-block text-center h3 mt-3 mb-4" href="{{ route('detail', $item->slug) }}">
-                                {{ $item->nama_paket }}
+                                {{ $item->nama_layanan }}
                             </a>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="d-flex align-items-center">

@@ -10,25 +10,25 @@ class Layanan extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'layanans';
-    protected $primaryKey = 'id';
+    protected $table = 'layanan';
+    protected $primaryKey = 'id_layanan';
 
     protected $guarded = [
-        'id',
+        'id_layanan',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id', 'id');
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
     public function galleries()
     {
-        return $this->hasMany(GaleryLayanan::class, 'layanan_id', 'id');
+        return $this->hasMany(GaleryLayanan::class, 'id_galeri_layanan', 'id_layanan');
     }
 
     public function transaction()
     {
-        return $this->hasMany(Transaction::class, 'layanan_id', 'id');
+        return $this->hasMany(Transaction::class, 'id_layanan', 'id');
     }
 }

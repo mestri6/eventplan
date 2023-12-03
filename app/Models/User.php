@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function kategori()
     {
-        return $this->belongsTo(KategoriLayanan::class, 'id_kategori_layanan', 'id');
+        return $this->hasOne(KategoriLayanan::class, 'id_kategori_layanan', 'id');
     }
 
     public function transaksi()

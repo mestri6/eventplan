@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Layanan')
+@section('title', 'Tambah Layanan')
 
 @section('content')
 
@@ -14,15 +14,16 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label for="nama_paket">Nama Layanan</label>
-                                <input type="text" name="nama_paket" id="nama_paket" class="form-control"
+                                <label for="nama_layanan">Nama Layanan</label>
+                                <input type="text" name="nama_layanan" id="nama_layanan" class="form-control"
                                     placeholder="Masukkan Nama Paket" required>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label for="harga">Harga</label>
-                                <input name="harga" id="harga" class="form-control" placeholder="Masukan harga" required />
+                                <input name="harga" id="harga" class="form-control" placeholder="Masukan harga"
+                                    required />
                             </div>
                         </div>
                     </div>
@@ -35,7 +36,8 @@
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
                                 <label for="thumbnail">Thumbnail</label>
-                                <input type="file" name="thumbnail[]" max="4" id="thumbnail" class="form-control" multiple required> 
+                                <input type="file" name="thumbnail[]" max="4" id="thumbnail" class="form-control"
+                                    multiple required>
                             </div>
                         </div>
                     </div>
@@ -43,7 +45,9 @@
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
                                 <label for="deskripsi">Isi Deskripsi Layanan</label>
-                                <textarea name="deskripsi" class="ckeditor form-control @error('deskripsi') is-invalid @enderror">{{ old('deskripsi')
+                                <textarea name="deskripsi"
+                                    class="ckeditor form-control @error('deskripsi') is-invalid @enderror">{{
+                                    old('deskripsi')
                                     }}</textarea>
                                 @error('deskripsi') <div class="text-muted">{{ $message }}</div>@enderror
                             </div>
@@ -69,65 +73,6 @@
         $('#btnSave').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Menyimpan...');
     });
 
-    $('#tb_layanan').DataTable({
-        processing: true,
-        serverSide: true,
-        responsive: true,
-        dom: 'lBfrtip',
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        buttons: [
-            {
-            extend: 'copy',
-            text: 'Copy',
-            className: 'btn btn-primary',
-            exportOptions: {
-            columns: [1, 2, 3, 4]
-            }
-            },
-            {
-            extend: 'csv',
-            text: 'CSV',
-            className: 'btn btn-primary',
-            exportOptions: {
-            columns: [1, 2, 3, 4]
-            }
-            },
-            {
-            extend: 'excel',
-            text: 'Excel',
-            className: 'btn btn-primary',
-            exportOptions: {
-            columns: [1, 2, 3, 4]
-            }
-            },
-            {
-            extend: 'pdf',
-            text: 'PDF',
-            className: 'btn btn-primary',
-            exportOptions: {
-            columns: [1, 2, 3, 4]
-            }
-            },
-            {
-            extend: 'print',
-            text: 'Print',
-            className: 'btn btn-primary',
-            exportOptions: {
-            columns: [1, 2, 3, 4]
-            }
-            }
-        ],
-        ordering: [[1, 'asc']],
-        ajax: {
-            url: "{!! url()->current() !!}",
-        },
-        columns: [
-            { data: 'DT_RowIndex', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'action', name: 'action', orderable: false, searchable: false },
-        ],
-    });
-
     // script untuk menampilkan preview thumbnail
     if ($('#thumbnail').length > 0) {
         $('#thumbnail').change(function () {
@@ -137,23 +82,6 @@
             }
         });
     }
-
-    // untuk menampilkan preview thumbnail
-
-    // if ($('#thumbnail').length > 0) {
-    //     $('#thumbnail').change(function () {
-    //         var file = $(this)[0].files[0];
-    //         if (file) {
-    //             var reader = new FileReader();
-    //             reader.onload = function (e) {
-    //                 $('#preview-thumbnail').html(
-    //                     '<img src="' + e.target.result + '" class="img-thumbnail" style="max-height: 200px" />'
-    //                 );
-    //             }
-    //             reader.readAsDataURL(file);
-    //         }
-    //     });
-    // }
 
     // untuk mengubah harga menjadi rupiah cth: Rp. 15.000.000
     function formatRupiah(angka, prefix){

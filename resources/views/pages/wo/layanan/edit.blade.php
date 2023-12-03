@@ -7,16 +7,16 @@
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('layanan-wo.update', $item->id) }}" method="POST" enctype="multipart/form-data"
+                <form action="{{ route('layanan-wo.update', $item->id_layanan) }}" method="POST" enctype="multipart/form-data"
                     id="form-layanan">
                     @csrf
                     @method('PUT')
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label for="nama_paket">Nama Layanan</label>
-                                <input type="text" name="nama_paket" id="nama_paket" class="form-control"
-                                    value="{{ $item->nama_paket }}">
+                                <label for="nama_layanan">Nama Layanan</label>
+                                <input type="text" name="nama_layanan" id="nama_layanan" class="form-control"
+                                    value="{{ $item->nama_layanan }}">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -32,7 +32,7 @@
                             <figure class="figure gallery-container mb-3"> 
                                 <img src="{{ Storage::url($item->thumbnail) }}"
                                     class="w-100 img-fluid figure-img img-thumbnail" alt="" />
-                                <a href="javascript:void(0)" onclick="hapusGambar({{ $item->id }});" class="delete-gallery">
+                                <a href="javascript:void(0)" onclick="hapusGambar({{ $item->id_galeri_layanan }});" class="delete-gallery">
                                     <img src="{{ asset('assets/images/ic_delete.svg') }}" class="img-fluid w-75 h-75"
                                         alt="icon-delete" />
                                 </a>
@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label for="deskripsi">Isi Deskripsi Layanan</label>
                                 <textarea name="deskripsi" class="ckeditor form-control">
-                                    {{ $item->layanan->deskripsi }}
+                                    {{ $item->deskripsi }}
                                 </textarea>
                             </div>
                         </div>

@@ -43,8 +43,8 @@
             url: "{!! url()->current() !!}",
         },
         columns: [
-            { data: 'DT_RowIndex', name: 'id' },
-            { data: 'nama_paket', name: 'nama_paket' },
+            { data: 'DT_RowIndex', name: 'id_layanan' },
+            { data: 'nama_layanan', name: 'nama_layanan' },
             { data: 'harga', name: 'harga' },
             { data: 'thumbnail', name: 'thumbnail' },
             { data: 'action', name: 'action', orderable: false, searchable: false },

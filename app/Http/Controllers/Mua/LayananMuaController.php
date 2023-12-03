@@ -19,7 +19,7 @@ class LayananMuaController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = Layanan::where('users_id', Auth::user()->id)->get();
+            $query = Layanan::where('id_user', Auth::user()->id)->get();
 
             return datatables()->of($query)
                 ->addIndexColumn()
@@ -27,15 +27,15 @@ class LayananMuaController extends Controller
                     return 'Rp. ' . number_format($item->harga, 0, ',', '.');
                 })
                 ->editColumn('thumbnail', function ($item) {
-                    $galery = GaleryLayanan::where('layanan_id', $item->id)->first();
+                    $galery = GaleryLayanan::where('id_layanan', $item->id_layanan)->first();
                     return $galery ? '<img src="' . url('storage/' . $galery->thumbnail) . '" style="max-height: 50px;" />' : '-';
                 })
                 ->editColumn('action', function ($item) {
                     return '
-                        <a href="' . route('layanan-mua.edit', $item->id) . '" class="btn btn-sm btn-primary">
+                        <a href="' . route('layanan-mua.edit', $item->id_layanan) . '" class="btn btn-sm btn-primary">
                             <i class="fa fa-pencil-alt"></i>
                         </a>
-                        <form action="' . route('layanan-mua.destroy', $item->id) . '" method="POST" style="display: inline-block;">
+                        <form action="' . route('layanan-mua.destroy', $item->id_layanan) . '" method="POST" style="display: inline-block;">
                             ' . method_field('delete') . csrf_field() . '
                             <button type="submit" class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash"></i>
@@ -62,11 +62,10 @@ class LayananMuaController extends Controller
      */
     public function store(Request $request)
     {
-
         $item = Layanan::create([
-            'nama_paket' => $request->nama_paket,
-            'users_id' => Auth::user()->id,
-            'slug' => Str::slug($request->nama_paket),
+            'nama_layanan' => $request->nama_layanan,
+            'id_user' => Auth::user()->id,
+            'slug' => Str::slug($request->nama_layanan),
             'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga),
             'deskripsi' => $request->deskripsi
         ]);
@@ -81,7 +80,7 @@ class LayananMuaController extends Controller
                 // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
                 foreach ($request->file('thumbnail') as $file) {
                     GaleryLayanan::create([
-                        'layanan_id' => $item->id,
+                        'id_layanan' => $item->id_layanan,
                         'thumbnail' => $file->store('assets/layanan', 'public')
                     ]);
                 }
@@ -95,7 +94,6 @@ class LayananMuaController extends Controller
             Alert::error('Error', 'Data Gagal Ditambahkan');
             return back();
         }
-
     }
 
     /**
@@ -112,7 +110,7 @@ class LayananMuaController extends Controller
     public function edit(string $id)
     {
         $item = Layanan::findOrFail($id);
-        $gallery = GaleryLayanan::where('layanan_id', $id)->get();
+        $gallery = GaleryLayanan::where('id_layanan', $id)->get();
         return view('pages.mua.layanan.edit', compact('item', 'gallery'));
     }
 
@@ -127,16 +125,16 @@ class LayananMuaController extends Controller
             // script ini akan looping dan menyimpan foto kedalam folder assets/layanan
             foreach ($request->file('thumbnail') as $file) {
                 $data = new GaleryLayanan;
-                $data->layanan_id = $item->id;
+                $data->id_layanan = $item->id_layanan;
                 $data->thumbnail = $file->store('assets/layanan', 'public');
                 $data->save();
             }
         }
 
         $simpan = $item->update([
-            'nama_paket' => $request->nama_paket,
-            'users_id' => Auth::user()->id,
-            'slug' => Str::slug($request->nama_paket),
+            'nama_layanan' => $request->nama_layanan,
+            'id_user' => Auth::user()->id,
+            'slug' => Str::slug($request->nama_layanan),
             'harga' => str_replace(['Rp. ', '.'], ['', ''], $request->harga),
             'deskripsi' => $request->deskripsi
         ]);
@@ -156,7 +154,7 @@ class LayananMuaController extends Controller
     public function destroy(string $id)
     {
         $item = Layanan::findOrFail($id);
-        $gallery = GaleryLayanan::where('layanan_id', $id)->get();
+        $gallery = GaleryLayanan::where('id_layanan', $id)->get();
 
         foreach ($gallery as $galery) {
             Storage::disk('public')->delete($galery->thumbnail);

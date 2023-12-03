@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Layanan Wo')
+@section('title', 'Layanan mua')
 
 @section('content')
 
@@ -11,7 +11,7 @@
                 <a href="{{ route('layanan-mua.create') }}" class="btn btn-primary">Tambah Layanan</a>
             </div>
             <div class="card-body">
-               <div class="table-responsive">
+                <div class="table-responsive">
                     <table id="tb_layanan" class="table table-hover scroll-horizontal-vertical w-100">
                         <thead>
                             <tr>
@@ -43,8 +43,8 @@
             url: "{!! url()->current() !!}",
         },
         columns: [
-            { data: 'DT_RowIndex', name: 'id' },
-            { data: 'nama_paket', name: 'nama_paket' },
+            { data: 'DT_RowIndex', name: 'id_layanan' },
+            { data: 'nama_layanan', name: 'nama_layanan' },
             { data: 'harga', name: 'harga' },
             { data: 'thumbnail', name: 'thumbnail' },
             { data: 'action', name: 'action', orderable: false, searchable: false },

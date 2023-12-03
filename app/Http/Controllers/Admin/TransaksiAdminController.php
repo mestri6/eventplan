@@ -24,7 +24,7 @@ class TransaksiAdminController extends Controller
                 ->editColumn('created_at', function ($item) {
                     return Carbon::parse($item->created_at)->isoFormat('dddd, D MMMM Y');
                 })
-                ->editColumn('users_id', function ($item) {
+                ->editColumn('id_user', function ($item) {
                     return $item->user->name ?? '-';
                 })
                 ->editColumn('bukti_pembayaran', function ($item) {
@@ -35,19 +35,19 @@ class TransaksiAdminController extends Controller
                     }
                 })
                 ->editColumn('status_pembayaran', function ($item) {
-                    if ($item->status_pembayaran == 'pending') {
+                    if ($item->status_pembayaran == 'tertunda') {
                         return '<span class="badge badge-warning">' . $item->status_pembayaran . '</span>';
-                    } elseif ($item->status_pembayaran == 'success') {
+                    } elseif ($item->status_pembayaran == 'berhasil') {
                         return '<span class="badge badge-success">' . $item->status_pembayaran . '</span>';
-                    } elseif ($item->status_pembayaran == 'failed') {
+                    } elseif ($item->status_pembayaran == 'gagal') {
                         return '<span class="badge badge-danger">' . $item->status_pembayaran . '</span>';
                     }
                 })
                 ->editColumn('action', function ($item) {
-                    if($item->status_pembayaran == 'success'){
+                    if($item->status_pembayaran == 'berhasil'){
                         return '
                             <div class="d-flex align-items-center">
-                                <a href="' . route('transaksi-admin.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
+                                <a href="' . route('transaksi-admin.show', $item->id_transaksi) . '" class="btn btn-sm btn-primary mx-2">
                                     <i class="fa fa-eye"></i>
                                 </a>
                                 <button class="btn btn-sm btn-success mx-2" disabled>
@@ -58,10 +58,10 @@ class TransaksiAdminController extends Controller
                     }else{
                         return '
                             <div class="d-flex align-items-center">
-                                <a href="' . route('transaksi-admin.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
+                                <a href="' . route('transaksi-admin.show', $item->id_transaksi) . '" class="btn btn-sm btn-primary mx-2">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <form action="' . route('transaksi-admin.update', $item->id) . '" method="POST">
+                                <form action="' . route('transaksi-admin.update', $item->id_transaksi) . '" method="POST">
                                     ' . method_field('put') . csrf_field() . '
                                     <button type="submit" class="btn btn-sm btn-success mx-2">
                                         Verifikasi Pembayaran
@@ -72,10 +72,10 @@ class TransaksiAdminController extends Controller
                     }
                     return '
                         <div class="d-flex align-items-center">
-                            <a href="' . route('transaksi-admin.show', $item->id) . '" class="btn btn-sm btn-primary mx-2">
+                            <a href="' . route('transaksi-admin.show', $item->id_transaksi) . '" class="btn btn-sm btn-primary mx-2">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <form action="' . route('transaksi-admin.update', $item->id) . '" method="POST">
+                            <form action="' . route('transaksi-admin.update', $item->id_transaksi) . '" method="POST">
                                 ' . method_field('put') . csrf_field() . '
                                 <button type="submit" class="btn btn-sm btn-success mx-2">
                                     Verifikasi Pembayaran
@@ -130,7 +130,7 @@ class TransaksiAdminController extends Controller
     {
 
         $data = Transaction::findOrFail($id);
-        $data->status_pembayaran = 'success';
+        $data->status_pembayaran = 'berhasil';
 
         if($data->save()){
             Alert::success('Berhasil', 'Pembayaran berhasil diverifikasi');

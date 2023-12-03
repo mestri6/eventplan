@@ -31,7 +31,7 @@
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
                             <label>Kategori Akun</label>
-                            <input type="text" class="form-control" value="{{ $item->kategori->nama }}" readonly />
+                            <input type="text" class="form-control" value="{{ $item->kategori->nama_kategori_layanan }}" readonly />
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                     <form action="{{ route('admin.verif-pengguna') }}" method="POST" id="form-verifikasi">
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ $item->id }}">
-                        <input type="hidden" name="role" id="role" value="{{ $item->kategori->nama }}">
+                        <input type="hidden" name="role" id="role" value="{{ $item->kategori->nama_kategori_layanan }}">
                         <button type="submit" class="btn btn-primary btn-block col w-full"
                             id="btnSave">Verifikasi</button>
                     </form>

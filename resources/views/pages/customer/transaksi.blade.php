@@ -42,8 +42,8 @@
             url: "{!! url()->current() !!}",
         },
         columns: [
-            { data: 'DT_RowIndex', name: 'id' },
-            { data: 'users_id', name: 'users_id' },
+            { data: 'DT_RowIndex', name: 'id_transaksi' },
+            { data: 'id_user', name: 'id_user' },
             { data: 'status_pembayaran', name: 'status_pembayaran' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],

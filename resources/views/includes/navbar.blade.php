@@ -14,7 +14,7 @@
             <a href="/" class="nav-item nav-link">Kontak</a>
             @auth
             @php
-                $countCart = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
+                $countCart = \App\Models\Cart::where('id_user', Auth::user()->id)->count();
             @endphp
                 <a href="{{ route('cart') }}" class="nav-item nav-link {{ request()->is('cart') ? 'active' : '' }}">
                     <i class="fa fa-shopping-cart active"></i>

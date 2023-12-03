@@ -13,19 +13,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // $layanan = Layanan::with(['galleries', 'user'])->get();
-
         $layanan = Layanan::with(['galleries', 'user'])->get();
 
-        // $cekIdLayananTransaction = [];
-        // foreach ($layanan as $item) {
-        //     $cekIdLayananTransaction[] = $item->id;
-        // }
-
-        // $cekId = Transaction::where('layanan_id', $cekIdLayananTransaction)->first();
-
-
-        // return view('home', compact('layanan', 'cekIdLayananTransaction', 'cekId'));
         return view('home', compact('layanan'));
     }
 
@@ -33,12 +22,6 @@ class HomeController extends Controller
     {
 
         $item = Layanan::with(['galleries', 'user'])->where('slug', $id)->firstOrFail();
-        // $cekId = Transaction::where('layanan_id', $item->id)->first();
-
-        // if ($cekId) {
-        //     return abort(404);
-        // }
-
         
         return view('detail', [
             'item' => $item,

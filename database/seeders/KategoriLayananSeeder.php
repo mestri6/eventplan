@@ -15,14 +15,14 @@ class KategoriLayananSeeder extends Seeder
     {
         $kategori = [
             [
-                'id' => 1,
-                'nama' => 'Wo',
+                'id_kategori_layanan' => 1,
+                'nama_kategori_layanan' => 'Wo',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 2,
-                'nama' => 'Mua',
+                'id_kategori_layanan' => 2,
+                'nama_kategori_layanan' => 'Mua',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

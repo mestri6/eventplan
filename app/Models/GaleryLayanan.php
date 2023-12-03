@@ -10,15 +10,15 @@ class GaleryLayanan extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'galery_layanans';
-    protected $primaryKey = 'id';
+    protected $table = 'galeri_layanan';
+    protected $primaryKey = 'id_galeri_layanan';
 
     protected $guarded = [
-        'id',
+        'id_galeri_layanan',
     ];
 
     public function layanan()
     {
-        return $this->belongsTo(Layanan::class, 'layanan_id', 'id');
+        return $this->belongsTo(Layanan::class, 'id_layanan', 'id_layanan');
     }
 }

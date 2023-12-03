@@ -10,20 +10,20 @@ class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'transactions';
-    protected $primaryKey = 'id';
+    protected $table = 'transaksi';
+    protected $primaryKey = 'id_transaksi';
 
     protected $guarded = [
-        'id',
+        'id_transaksi',
     ];
 
     public function layanan()
     {
-        return $this->belongsTo(Layanan::class, 'layanan_id', 'id');
+        return $this->belongsTo(Layanan::class, 'id_layanan', 'id_layanan');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id', 'id');
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 }

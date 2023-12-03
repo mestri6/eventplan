@@ -39,7 +39,7 @@
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
                             <label for="bank">Layanan</label>
-                            <input type="text" class="form-control" value="{{ $item->layanan->nama_paket }}" readonly>
+                            <input type="text" class="form-control" value="{{ $item->layanan->nama_layanan }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-lg-12">
@@ -65,7 +65,7 @@
                             <form action="{{ route('customer.upload-pembayaran') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                <input type="hidden" name="id_transaksi" value="{{ $item->id_transaksi }}">
                                 <div class="form-group">
                                     <label for="alamat">Upload Bukti Pembayaran</label>
                                     <input type="file" class="form-control" name="bukti_pembayaran">

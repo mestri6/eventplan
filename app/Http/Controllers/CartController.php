@@ -13,12 +13,12 @@ class CartController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = Cart::with(['user', 'layanan'])->where('users_id', Auth::user()->id)->get();
+            $query = Cart::with(['user', 'layanan'])->where('id_user', Auth::user()->id)->get();
 
             return datatables()->of($query)
                 ->addIndexColumn()
-                ->editColumn('layanan_id', function($item) {
-                    return $item->layanan->nama_paket ?? '-';
+                ->editColumn('id_layanan', function($item) {
+                    return $item->layanan->nama_layanan ?? '-';
                 })
                 ->editColumn('total_harga', function($item) {
                     return 'Rp. ' . number_format($item->total_harga, 0, ',', '.');
@@ -26,7 +26,7 @@ class CartController extends Controller
                 ->editColumn('action', function ($item) {
                     return '
                         <a href="javascript:void(0)" class="btn btn-danger" onClick="deleteCart(
-                            ' . $item->id . '
+                            ' . $item->id_keranjang . '
                         )">
                             Hapus
                         </a>
@@ -37,11 +37,11 @@ class CartController extends Controller
         }
         
         $kodeUnik = mt_rand(100, 999);
-        $harga = Cart::where('users_id', Auth::user()->id)->sum('total_harga');
+        $harga = Cart::where('id_user', Auth::user()->id)->sum('total_harga');
 
         
         $totalPembayaran = $harga + $kodeUnik;
-        $countCart = Cart::where('users_id', Auth::user()->id)->count();
+        $countCart = Cart::where('id_user', Auth::user()->id)->count();
         return view('cart', compact('kodeUnik', 'harga', 'totalPembayaran', 'countCart'));
     }
 
@@ -49,8 +49,8 @@ class CartController extends Controller
     {
         $layanan = Layanan::findOrFail($id);
         $data = Cart::create([
-            'users_id' => Auth::user()->id,
-            'layanan_id' => $id,
+            'id_user' => Auth::user()->id,
+            'id_layanan' => $id,
             'total_harga' => $layanan->harga,
         ]);
 
@@ -65,7 +65,7 @@ class CartController extends Controller
 
     public function destroy(Request $request)
     {
-        $cart = Cart::findOrFail($request->id);
+        $cart = Cart::findOrFail($request->id_keranjang);
         $cart->delete();
 
         if ($cart) {

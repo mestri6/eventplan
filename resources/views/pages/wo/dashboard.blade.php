@@ -13,7 +13,7 @@
           Pendapatan
           <i class="mdi mdi-chart-line mdi-24px float-right"></i>
         </h4>
-        <h2 class="mb-5">Rp. {{ number_format($income) }}</h2>
+        {{-- <h2 class="mb-5">Rp. {{ number_format($income) }}</h2> --}}
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@
           Total Orders
           <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
         </h4>
-        <h2 class="mb-5">{{ $countOrder }}</h2>
+        {{-- <h2 class="mb-5">{{ $countOrder }}</h2> --}}
       </div>
     </div>
   </div>
