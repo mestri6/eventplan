@@ -177,7 +177,7 @@
     });
 </script>
 
-<script>
+{{-- <script>
         $('#form-checkout').submit(function(e){
             e.preventDefault();
             var form = $(this);
@@ -213,7 +213,7 @@
                 }
             });
         });
-</script>
+</script> --}}
 
 @endpush
 
