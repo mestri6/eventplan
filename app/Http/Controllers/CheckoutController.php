@@ -56,10 +56,9 @@ class CheckoutController extends Controller
         ];
 
         $customer_details[] = [
-            'first_name' => Auth::user()->name,
-            'email' => Auth::user()->email,
-            'nama_layanan' => $transaction->layanan->nama_layanan,
-            'tanggal_acara' => $transaction->tanggal_acara,
+            'first_name' => $transaction->user->name,
+            'email' => $transaction->user->email,
+            'phone' => $transaction->user->phone,
         ];
 
         $midtrans_params = [
