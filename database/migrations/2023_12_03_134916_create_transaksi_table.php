@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_transaksi');
             $table->string('id_layanan');
             $table->string('id_user');
+            $table->string('id_order');
             $table->date('tanggal_acara');
             $table->string('alamat');
             $table->enum('status_pembayaran', ['tertunda', 'berhasil', 'gagal'])->default('tertunda');
