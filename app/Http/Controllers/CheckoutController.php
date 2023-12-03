@@ -78,6 +78,53 @@ class CheckoutController extends Controller
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+    }
 
+    public function callback(Request $request)
+    {
+
+        $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->order_id);
+
+        $transaction_status = $notif->status_pembayaran;
+        $fraud = $notif->fraud_status;
+
+        $transaction_id = explode('-', $notif->order_id)[0];
+        $transaction = Transaction::find($transaction_id);
+
+        if ($transaction_status == 'capture') {
+            if ($fraud == 'challenge') {
+                // TODO Set payment status in merchant's database to 'challenge'
+                $transaction->payment_status = 'PENDING';
+            } else if ($fraud == 'accept') {
+                // TODO Set payment status in merchant's database to 'success'
+                $transaction->payment_status = 'DIBAYAR';
+            } else if ($transaction_status == 'expire') {
+                // TODO set payment status in merchant's database to 'expire'
+                $transaction->payment_status = 'KADALUARSA';
+            }
+        } else if ($transaction_status == 'cancel') {
+            if ($fraud == 'challenge') {
+                // TODO Set payment status in merchant's database to 'failure'
+                $transaction->payment_status = 'KADALUARSA';
+            } else if ($fraud == 'accept') {
+                // TODO Set payment status in merchant's database to 'failure'
+                $transaction->payment_status = 'KADALUARSA';
+            }
+        } else if ($transaction_status == 'deny') {
+            // TODO Set payment status in merchant's database to 'failure'
+            $transaction->payment_status = 'KADALUARSA';
+        } else if ($transaction_status == 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            $transaction->payment_status = 'DIBAYAR';
+        } else if ($transaction_status == 'pending') {
+            // TODO set payment status in merchant's database to 'Pending'
+            $transaction->payment_status = 'PENDING';
+        } else if ($transaction_status == 'expire') {
+            // TODO set payment status in merchant's database to 'expire'
+            $transaction->payment_status = 'KADALUARSA';
+        }
+
+        $transaction->save();
+        return view('success');
     }
 }
