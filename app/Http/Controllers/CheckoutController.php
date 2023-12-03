@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
 use Illuminate\Support\Str;
+use Midtrans;
 
 class CheckoutController extends Controller
 {
