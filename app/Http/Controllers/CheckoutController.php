@@ -86,7 +86,7 @@ class CheckoutController extends Controller
 
         $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->id_order);
 
-        $transaction_status = $notif->status_pembayaran;
+        $transaction_status = $notif->transactions_status;
         $fraud = $notif->fraud_status;
 
         $transaction_id = explode('-', $notif->id_order)[0];
