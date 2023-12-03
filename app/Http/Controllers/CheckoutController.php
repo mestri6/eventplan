@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -44,23 +45,34 @@ class CheckoutController extends Controller
 
         Transaction::with(['layanan', 'user'])->where('id_user', Auth::user()->id)->first();
 
-        // konfigurasi midtrans
-        $midtrans = [
-            'transaction_details' => [
-                'order_id' => 'WO-' . $transaction->id . '-' . date('Y-m-d'),
-                'gross_amount' => (int) $transaction->total_pembayaran,
-            ],
-            'customer_details' => [
-                'first_name' => Auth::user()->name,
-                'email' => Auth::user()->email,
-            ],
-            'enabled_payments' => ['gopay', 'bank_transfer'],
-            'vtweb' => []
+        $orderId = 'EVENT-' . $transaction->id . Str::random(5);
+        $price = $transaction->total_pembayaran;
+
+        $transaction->id_order = $orderId;
+
+        $transaction_details = [
+            'order_id' => $orderId,
+            'gross_amount' => $price,
+        ];
+
+        $customer_details[] = [
+            'first_name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+            'nama_layanan' => $transaction->layanan->nama_layanan,
+            'tanggal_acara' => $transaction->tanggal_acara,
+        ];
+
+        $midtrans_params = [
+            'transaction_details' => $transaction_details,
+            'customer_details' => $customer_details[0],
+            'enabled_payments' => ['gopay'],
         ];
 
         try {
             // ambil halaman payment midtrans
-            $paymentUrl = \Midtrans\Snap::createTransaction($midtrans)->redirect_url;
+            $paymentUrl = \Midtrans\Snap::createTransaction($midtrans_params)->redirect_url;
+            $transaction->midtrans_url = $paymentUrl;
+            $transaction->save();
             // redirect ke halaman midtrans
             return redirect()->away($paymentUrl);
         } catch (\Exception $e) {
