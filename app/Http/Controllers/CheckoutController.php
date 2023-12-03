@@ -64,7 +64,12 @@ class CheckoutController extends Controller
         $midtrans_params = [
             'transaction_details' => $transaction_details,
             'customer_details' => $customer_details[0],
-            'enabled_payments' => ['gopay'],
+            'payment' => [
+                'gopay' => [
+                    'enable_callback' => true,
+                    'callback_url' => route('midtrans.callback'),
+                ],
+            ],
         ];
 
         try {
