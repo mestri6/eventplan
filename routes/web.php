@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\TransaksiAdminController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Customer\AkunCustomerController;
 use App\Http\Controllers\Customer\DashboardCustomerController;
 use App\Http\Controllers\Customer\TransaksiCustomerController;
@@ -90,12 +91,16 @@ Route::prefix('customer')
         Route::resource('akun-customer', AkunCustomerController::class);
     });
 
+
+Route::get('pembayaran/success', [CheckoutController::class, 'callback'])->name('pembayaran-success');
+Route::post('pembayaran/success', [CheckoutController::class, 'callback']);
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::post('/cart/{id}', [CartController::class, 'addToCart'])->name('cart-add');
     Route::delete('/hapus/cart', [CartController::class, 'destroy'])->name('cart-delete');
     Route::get('/checkout/pembayaran/success', [TransactionsController::class, 'success'])->name('pembayaran');
-    Route::post('/checkout', [TransactionsController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout');
 });
 
 Auth::routes();
