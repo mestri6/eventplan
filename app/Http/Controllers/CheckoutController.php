@@ -46,7 +46,7 @@ class CheckoutController extends Controller
 
         Transaction::with(['layanan', 'user'])->where('id_user', Auth::user()->id)->first();
 
-        $orderId = $transaction->id . '-' . Str::random(5);
+        $orderId = $transaction->id_transaksi . '-' . Str::random(5);
         $price = $transaction->total_pembayaran;
 
         $transaction->id_order = $orderId;
