@@ -94,34 +94,34 @@ class CheckoutController extends Controller
         if ($transaction_status == 'capture') {
             if ($fraud == 'challenge') {
                 // TODO Set payment status in merchant's database to 'challenge'
-                $transaction->payment_status = 'PENDING';
+                $transaction->status_pembayaran = 'tertunda';
             } else if ($fraud == 'accept') {
                 // TODO Set payment status in merchant's database to 'success'
-                $transaction->payment_status = 'DIBAYAR';
+                $transaction->status_pembayaran = 'berhasil';
             } else if ($transaction_status == 'expire') {
                 // TODO set payment status in merchant's database to 'expire'
-                $transaction->payment_status = 'KADALUARSA';
+                $transaction->status_pembayaran = 'gagal';
             }
         } else if ($transaction_status == 'cancel') {
             if ($fraud == 'challenge') {
                 // TODO Set payment status in merchant's database to 'failure'
-                $transaction->payment_status = 'KADALUARSA';
+                $transaction->status_pembayaran = 'gagal';
             } else if ($fraud == 'accept') {
                 // TODO Set payment status in merchant's database to 'failure'
-                $transaction->payment_status = 'KADALUARSA';
+                $transaction->status_pembayaran = 'gagal';
             }
         } else if ($transaction_status == 'deny') {
             // TODO Set payment status in merchant's database to 'failure'
-            $transaction->payment_status = 'KADALUARSA';
+            $transaction->status_pembayaran = 'gagal';
         } else if ($transaction_status == 'settlement') {
             // TODO set payment status in merchant's database to 'Settlement'
-            $transaction->payment_status = 'DIBAYAR';
+            $transaction->status_pembayaran = 'berhasil';
         } else if ($transaction_status == 'pending') {
             // TODO set payment status in merchant's database to 'Pending'
-            $transaction->payment_status = 'PENDING';
+            $transaction->status_pembayaran = 'tertunda';
         } else if ($transaction_status == 'expire') {
             // TODO set payment status in merchant's database to 'expire'
-            $transaction->payment_status = 'KADALUARSA';
+            $transaction->status_pembayaran = 'gagal';
         }
 
         $transaction->save();
