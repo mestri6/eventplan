@@ -46,46 +46,46 @@ class LoginController extends Controller
         }
     }
 
-    // public function login(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'email' => 'required|string|email|max:100',
-    //         'password' => 'required|string',
-    //         'g-recaptcha-response' => 'required',
-    //     ]);
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|string|email|max:100',
+            'password' => 'required|string',
+            'g-recaptcha-response' => 'required',
+        ]);
 
-    //     // Validasi reCAPTCHA
-    //     $client = new Client();
-    //     $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
-    //         'form_params' => array(
-    //             'secret' => config('recaptcha.api_secret_key'),
-    //             'response' => $request->input('g-recaptcha-response')
-    //         )
-    //     ]);
+        // Validasi reCAPTCHA
+        $client = new Client();
+        $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => array(
+                'secret' => config('recaptcha.api_secret_key'),
+                'response' => $request->input('g-recaptcha-response')
+            )
+        ]);
 
-    //     $body = json_decode((string) $response->getBody());
-    //     if (!$body->success) {
-    //         return back()->withErrors(['captcha' => 'ReCaptcha Error']);
-    //     }
+        $body = json_decode((string) $response->getBody());
+        if (!$body->success) {
+            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+        }
 
-    //     // Validasi Login
-    //     $credentials = $request->only('email', 'password');
-    //     if (Auth::attempt($credentials)) {
-    //         if(Auth::user()->role == 'Admin'){
-    //             return redirect()->route('admin.dashboard');
-    //         }elseif(Auth::user()->role == 'Wo'){
-    //             return redirect()->route('wo.dashboard');
-    //         }elseif(Auth::user()->role == 'Mua'){
-    //             return redirect()->route('mua.dashboard');
-    //         }elseif(Auth::user()->role == 'Customer'){
-    //             return redirect()->route('customer.dashboard');
-    //         }else{
-    //             return abort(404);
-    //         }
-    //     }else{
-    //         return redirect()->route('login')->with('error', 'Email atau Password salah!');
-    //     }
-    // }
+        // Validasi Login
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            if(Auth::user()->role == 'Admin'){
+                return redirect()->route('admin.dashboard');
+            }elseif(Auth::user()->role == 'Wo'){
+                return redirect()->route('wo.dashboard');
+            }elseif(Auth::user()->role == 'Mua'){
+                return redirect()->route('mua.dashboard');
+            }elseif(Auth::user()->role == 'Customer'){
+                return redirect()->route('customer.dashboard');
+            }else{
+                return abort(404);
+            }
+        }else{
+            return redirect()->route('login')->with('error', 'Email atau Password salah!');
+        }
+    }
 
     /**
      * Create a new controller instance.
