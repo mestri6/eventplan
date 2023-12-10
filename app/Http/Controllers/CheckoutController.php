@@ -49,7 +49,7 @@ class CheckoutController extends Controller
         $orderId = $transaction->id_transaksi . '-' . Str::random(5);
         $price = $transaction->total_pembayaran;
 
-        $transaction->id_order = $orderId;
+        $transaction->order_id = $orderId;
 
         $transaction_details = [
             'order_id' => $orderId,
