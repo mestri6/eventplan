@@ -32,7 +32,7 @@
                             <figure class="figure gallery-container mb-3">
                                 <img src="{{ Storage::url($item->thumbnail) }}"
                                     class="w-100 img-fluid figure-img img-thumbnail" alt="" />
-                                <a href="javascript:void(0)" onclick="hapusGambar({{ $item->id }});"
+                                <a href="javascript:void(0)" onclick="hapusGambar({{ $item->id_galeri_layanan }});"
                                     class="delete-gallery">
                                     <img src="{{ asset('assets/images/ic_delete.svg') }}" class="img-fluid w-75 h-75"
                                         alt="icon-delete" />
