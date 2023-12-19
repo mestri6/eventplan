@@ -33,9 +33,19 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <!-- Ckeditor -->
-<script src="https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js"></script>
+{{-- <script src="https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js"></script> --}}
+
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
 
 <script>
+        ClassicEditor
+        .create( document.querySelector( '.ckeditor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+{{-- <script>
     ClassicEditor
         .create( document.querySelector( '.ckeditor' ) )
         .then( editor => {
@@ -44,4 +54,4 @@
         .catch( error => {
                 console.error( error );
         } );
-</script>
+</script> --}}

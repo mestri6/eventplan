@@ -22,7 +22,6 @@ class HomeController extends Controller
     {
 
         $item = Layanan::with(['galleries', 'user'])->where('slug', $id)->firstOrFail();
-        
         return view('detail', [
             'item' => $item,
         ]);
