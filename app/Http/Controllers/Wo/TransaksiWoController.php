@@ -29,16 +29,16 @@ class TransaksiWoController extends Controller
                     return $item->user->name ?? '-';
                 })
                 ->editColumn('status_pembayaran', function ($item) {
-                    if ($item->status_pembayaran == 'pending') {
+                    if ($item->status_pembayaran == 'tertunda') {
                         return '<span class="badge badge-warning">' . $item->status_pembayaran . '</span>';
-                    } elseif ($item->status_pembayaran == 'success') {
+                    } elseif ($item->status_pembayaran == 'berhasil') {
                         return '<span class="badge badge-success">' . $item->status_pembayaran . '</span>';
-                    } elseif ($item->status_pembayaran == 'failed') {
+                    } elseif ($item->status_pembayaran == 'gagal') {
                         return '<span class="badge badge-danger">' . $item->status_pembayaran . '</span>';
                     }
                 })
                 ->editColumn('action', function ($item) {
-                    if ($item->status_pembayaran == 'success') {
+                    if ($item->status_pembayaran == 'berhasil') {
                         return '
                             <div class="d-flex">
                                 <a href="' . route('transaksi-wo.show', $item->id_transaksi) . '" class="btn btn-sm btn-primary mx-2">
