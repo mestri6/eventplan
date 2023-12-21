@@ -17,7 +17,7 @@ class TransaksiWoController extends Controller
     {
         if (request()->ajax()) {
             $query = Transaction::whereHas('layanan', function ($query) {
-                $query->where('users_id', Auth::user()->id);
+                $query->where('id_user', Auth::user()->id);
             })->get();
 
             return datatables()->of($query)
@@ -25,7 +25,7 @@ class TransaksiWoController extends Controller
                 ->editColumn('created_at', function ($item) {
                     return Carbon::parse($item->created_at)->isoFormat('dddd, D MMMM Y');
                 })
-                ->editColumn('users_id', function ($item) {
+                ->editColumn('id_user', function ($item) {
                     return $item->user->name ?? '-';
                 })
                 ->editColumn('status_pembayaran', function ($item) {
