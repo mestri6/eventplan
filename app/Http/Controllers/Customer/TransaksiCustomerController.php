@@ -36,7 +36,7 @@ class TransaksiCustomerController extends Controller
                     }
                 })
                 ->editColumn('action', function ($item) {
-                    if($item->status_pembayaran == 'success'){
+                    if($item->status_pembayaran == 'berhasil'){
                         return '
                             <div class="d-flex">
                                 <a href="' . route('customer.detail-transaksi', $item->id_transaksi) . '" class="btn btn-sm btn-primary mx-2">
