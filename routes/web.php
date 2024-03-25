@@ -57,7 +57,7 @@ Route::prefix('wo')
     ->middleware(['auth', 'wo'])
     ->group(function () {
         Route::get('/dashboard', [DashboardWoController::class, 'index'])->name('wo.dashboard');
-
+        Route::put('/akun/handle-toko', [AkunWoController::class, 'handleToko'])->name('wo.handle-toko');
         Route::delete('/layanan-wo/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('delete-gallery-layanan');
 
         Route::resource('layanan-wo', LayananController::class);

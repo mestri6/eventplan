@@ -32,6 +32,7 @@ class User extends Authenticatable
         'status_akun',
         'alasan_penolakan',
         'id_kategori_layanan',
+        'isOpen',
     ];
 
     /**

@@ -94,4 +94,22 @@ class AkunWoController extends Controller
     {
         //
     }
+
+    public function handleToko()
+    {
+        $item = User::findOrFail(Auth::user()->id);
+
+        // Mengganti nilai isOpen menggunakan operasi NOT logika
+        $item->update([
+            'isOpen' => !$item->isOpen,
+        ]);
+
+        // Mengembalikan pesan berdasarkan status terbaru dari toko
+        $message = $item->isOpen ? 0 : 1;
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+        ]);
+    }
 }

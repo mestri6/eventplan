@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('role')->default('Customer');
+            $table->boolean('isOpen')->default(1);
             $table->string('email')->unique();
             $table->string('no_wa')->nullable();
             $table->string('nama_usaha')->nullable();
