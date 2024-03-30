@@ -33,14 +33,16 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [HomeController::class,'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/detail-layanan/{slug}', [HomeController::class, 'detailLayanan'])->name('detail');
+Route::get('/list-pesanan/{id}', [HomeController::class, 'listPesanan'])->name('list-pesanan');
+Route::post('/cart/check-tanggal', [CartController::class, 'checkTanggal'])->name('check-tanggal');
 
 Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
-        
+
         Route::get('/verifikasi', [DashboardAdminController::class, 'tablePengguna'])->name('admin.table-pengguna');
         Route::get('/verifikasi/show/pengguna/{id}', [DashboardAdminController::class, 'showVerifPenggua'])->name('admin.show-pengguna');
         Route::post('/verifikasi/pengguna', [DashboardAdminController::class, 'verifPengguna'])->name('admin.verif-pengguna');
@@ -52,7 +54,7 @@ Route::prefix('admin')
     });
 
 
-    
+
 Route::prefix('wo')
     ->middleware(['auth', 'wo'])
     ->group(function () {
@@ -69,8 +71,9 @@ Route::prefix('mua')
     ->middleware(['auth', 'mua'])
     ->group(function () {
         Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
+        Route::put('/akun/handle-toko', [AkunMuaController::class, 'handleToko'])->name('mua.handle-toko');
         Route::delete('/layanan-mua/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('mua-delete-gallery-layanan');
-        
+
 
         Route::resource('layanan-mua', LayananMuaController::class);
         Route::resource('transaksi-mua', TransaksiMuaController::class);
@@ -106,4 +109,3 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Auth::routes();
-

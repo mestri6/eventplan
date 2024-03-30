@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label for="nama">Tanggal Acara</label>
                     <input type="date" class="form-control" id="tanggal_acara" name="tanggal_acara"
-                        placeholder="Masukkan Tanggal Acara">
+                        placeholder="Masukkan Tanggal Acara" onchange="checkTanggal()" required>
                 </div>
             </div>
             <div class="col-12 col-lg-12 mb-3">
@@ -98,11 +98,12 @@
                 </table>
                 <div class="notes">
                     <p>
-                        <b>Catatan:</b> 
+                        <b>Catatan:</b>
                         <br>
                         - Pembayaran dapat dilakukan melalui transfer ke rekening yang tertera di atas.
                         <br>
-                        - Jika sudah melakukan pembayaran, silahkan upload bukti pembayaran pada halaman <a href="{{ route('transaksi-customer.index') }}">Riwayat Pemesanan</a>.
+                        - Jika sudah melakukan pembayaran, silahkan upload bukti pembayaran pada halaman <a
+                            href="{{ route('transaksi-customer.index') }}">Riwayat Pemesanan</a>.
                         <br>
                         - Pembayaran akan diverifikasi oleh admin kami.
                     </p>
@@ -119,6 +120,31 @@
 @endsection
 
 @push('after-script')
+
+<script>
+    function checkTanggal() {
+        const tanggal_acara = $('#tanggal_acara').val();
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('check-tanggal') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                tanggal_acara: tanggal_acara
+            },
+            success: function(res) {
+                if(res.status == false){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: res.message,
+                    });
+                    $('#tanggal_acara').val('');
+                }
+            }
+        });
+    }
+</script>
 
 <script>
     function deleteCart(id){
@@ -143,7 +169,6 @@
                         $(".preloader").fadeIn();
                     },
                     success: function(res){
-                        console.log(res);
                         $('#tb_cart').DataTable().ajax.reload();
                         Swal.fire(
                             'Terhapus!',
@@ -176,44 +201,6 @@
         ],
     });
 </script>
-
-{{-- <script>
-        $('#form-checkout').submit(function(e){
-            e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-            var method = form.attr('method');
-            var data = form.serialize();
-            $.ajax({
-                type: method,
-                url: url,
-                data: data,
-                beforeSend: function() {
-                    $(".preloader").fadeIn();
-                },
-                success: function(res){
-                    if(res.status == 'error'){
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: res.message,
-                            icon: "error"
-                        });
-                    }else{
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: res.message,
-                            icon: "success"
-                        }).then(function() {
-                            window.location = "{{ route('transaksi-customer.index') }}";
-                        });
-                    }
-                },
-                complete: function(){
-                    $(".preloader").fadeOut();
-                }
-            });
-        });
-</script> --}}
 
 @endpush
 

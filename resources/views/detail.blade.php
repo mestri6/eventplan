@@ -48,15 +48,21 @@
                         <form action="{{ route('cart-add', $item->id_layanan) }}" method="POST">
                             @csrf
                             @auth
-                                @if ($item->user->id == Auth::user()->id)
-                                <button class="btn btn-checkout" disabled>
-                                    <i class="bi bi-cart-plus"></i>
-                                </button>
-                                @else
-                                <button type="submit" class="btn btn-checkout">
-                                    <i class="bi bi-cart-plus"></i>
-                                </button>
-                                @endif
+                            @if ($item->user->id == Auth::user()->id)
+                            <button class="btn btn-checkout" disabled>
+                                <i class="bi bi-cart-plus"></i>
+                            </button>
+                            @else
+                            @if ($item->user->isOpen == 1)
+                            <span>
+                                <span class="badge bg-danger">Toko sedang tutup</span>
+                            </span>
+                            @else
+                            <button type="submit" class="btn btn-checkout">
+                                <i class="bi bi-cart-plus"></i>
+                            </button>
+                            @endif
+                            @endif
                             @endauth
                             @guest
                             <a href="{{ route('login') }}" class="btn btn-checkout">
@@ -81,15 +87,20 @@
                 <form action="{{ route('cart-add', $item->id_layanan) }}" method="POST">
                     @csrf
                     @auth
-                        @if ($item->user->id == Auth::user()->id)
-                        <button class="btn btn-checkout" disabled>
-                            Pesan Sekarang
-                        </button>
-                        @else
-                        <button type="submit" class="btn btn-checkout">
-                            Pesan Sekarang
-                        </button>
-                        @endif
+                    @if ($item->user->id == Auth::user()->id)
+                    <button class="btn btn-checkout" disabled>
+                        Pesan Sekarang
+                    </button>
+                    @else
+                    @if ($item->user->isOpen == 1)
+                    <span>
+                    </span>
+                    @else
+                    <button type="submit" class="btn btn-checkout">
+                        Pesan Sekarang
+                    </button>
+                    @endif
+                    @endif
                     @endauth
                     @guest
                     <a href="{{ route('login') }}" class="btn btn-checkout">
@@ -100,8 +111,52 @@
             </div>
         </div>
     </div>
+    <div class="row p-3 mt-5">
+        <div class="col-12 col-lg-12">
+            <div class="title mb-4">
+                <h3>Detail Booking</h3>
+            </div>
+        </div>
+        <div class="col-12 col-lg-12">
+            <div class="table-responsive">
+                <table id="tb_list_pesanan" class="table table-hover scroll-horizontal-vertical w-100">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama</th>
+                            <th>Nama Item</th>
+                            <th>Harga</th>
+                            <th>Tanggal Booking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
+
+@push('after-script')
+<script>
+    $('#tb_list_pesanan').DataTable({
+        processing: true,
+        serverSide: true,
+        ordering: [[1, 'asc']],
+        ajax: {
+            url: "{!! url()->current() !!}",
+        },
+        columns: [
+            { data: 'DT_RowIndex', name: 'id_keranjang' },
+            { data: 'id_user', name: 'id_user' },
+            { data: 'id_layanan', name: 'id_layanan' },
+            { data: 'total_harga', name: 'total_harga' },
+            { data: 'tanggal_acara', name: 'tanggal_acara' },
+        ],
+    });
+</script>
+@endpush
 
 @push('after-style')
 <style>
