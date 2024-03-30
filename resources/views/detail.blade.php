@@ -114,7 +114,7 @@
     <div class="row p-3 mt-5">
         <div class="col-12 col-lg-12">
             <div class="title mb-4">
-                <h3>Detail Booking</h3>
+                <h3>Daftar Booking</h3>
             </div>
         </div>
         <div class="col-12 col-lg-12">
