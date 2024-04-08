@@ -20,8 +20,14 @@
                     </div>
                     <div class="col-12 col-lg-12">
                         <div class="form-group">
-                            <label for="tanggal">Tanggal Acara</label>
-                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($item->tanggal_acara)->isoFormat('D MMMM Y') }}" readonly>
+                            <label for="tanggal">Tanggal Awal Booking</label>
+                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($item->tanggal_awal_booking)->isoFormat('D MMMM Y') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="tanggal">Tanggal Akhir Booking</label>
+                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($item->tanggal_akhir_booking)->isoFormat('D MMMM Y') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-lg-12">
