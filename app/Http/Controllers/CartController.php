@@ -138,8 +138,8 @@ class CartController extends Controller
             }
         }
 
-        // Menghapus duplikat tanggal
-        $listDateBooked = array_unique($listDateBooked);
+        // Menghapus duplikat tanggal dan gunakan array_values untuk memastikan array tetap berformat array setelah di-JSON encode
+        $listDateBooked = array_values(array_unique($listDateBooked));
 
         return response()->json($listDateBooked);
     }
