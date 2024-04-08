@@ -141,7 +141,6 @@
         type: "GET",
         url: "{{ route('get-tanggal-booking') }}",
         success: function(res) {
-            console.log(res); // Periksa respons
             // Coba parse jika res bukan array
             if (typeof res === "string") {
                 listDateBooked = JSON.parse(res);
