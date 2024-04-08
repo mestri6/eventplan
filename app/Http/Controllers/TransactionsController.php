@@ -26,7 +26,8 @@ class TransactionsController extends Controller
             $data = Transaction::create([
                 'id_layanan' => $layanan[0],
                 'id_user' => Auth::user()->id,
-                'tanggal_acara' => $request->tanggal_acara,
+                'tanggal_awal_booking' => $request->tanggal_awal_booking,
+                'tanggal_akhir_booking' => $request->tanggal_akhir_booking,
                 'alamat' => $request->alamat,
                 'kode_unik' => $request->kode_unik,
                 'total_pembayaran' => $request->total_pembayaran - $request->kode_unik,

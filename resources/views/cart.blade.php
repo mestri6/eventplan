@@ -50,11 +50,20 @@
                         value="{{ Auth::user()->name }}" readonly>
                 </div>
             </div>
-            <div class="col-12 col-lg-6 mb-3">
+            <div class="col-12 col-lg-3 mb-3">
                 <div class="form-group">
-                    <label for="nama">Tanggal Acara</label>
-                    <input type="date" class="form-control" id="tanggal_acara" name="tanggal_acara"
-                        placeholder="Masukkan Tanggal Acara" onchange="checkTanggal()" required>
+                    <label for="nama">Tanggal Awal Booking</label>
+                    <input type="text" class="form-control datepicker" id="tanggal_awal_booking"
+                        name="tanggal_awal_booking" placeholder="Masukkan Tanggal Awal" onchange="checkTanggal()"
+                        required>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 mb-3">
+                <div class="form-group">
+                    <label for="nama">Tanggal Akhir Booking</label>
+                    <input type="text" class="form-control datepicker" id="tanggal_akhir_booking"
+                        name="tanggal_akhir_booking" placeholder="Masukkan Tanggal Akhir" onchange="checkTanggal()"
+                        required>
                 </div>
             </div>
             <div class="col-12 col-lg-12 mb-3">
@@ -120,6 +129,39 @@
 @endsection
 
 @push('after-script')
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script>
+    $(document).ready(async function() {
+    var listDateBooked = [];
+
+    // Menggunakan await untuk menunggu hasil AJAX
+    await $.ajax({
+        type: "GET",
+        url: "{{ route('get-tanggal-booking') }}",
+        success: function(res) {
+            console.log(res); // Periksa respons
+            // Coba parse jika res bukan array
+            if (typeof res === "string") {
+                listDateBooked = JSON.parse(res);
+            } else {
+                listDateBooked = res;
+            }
+        }
+    });
+
+    $('.datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+        minDate: 0,
+        beforeShowDay: function(date) {
+            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+            // Memastikan tanggal tidak ada dalam daftar untuk bisa dipilih
+            return [listDateBooked.indexOf(string) === -1];
+        }
+    });
+});
+</script>
 
 <script>
     function checkTanggal() {
@@ -205,6 +247,7 @@
 @endpush
 
 @push('after-style')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <style>
     .container {
         margin-top: 100px;
@@ -226,6 +269,13 @@
         padding: 10px 20px;
         font-weight: 600;
         font-size: 16px;
+    }
+
+    .notes {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 5px;
     }
 </style>
 @endpush

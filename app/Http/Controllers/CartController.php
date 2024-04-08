@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Layanan;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -44,7 +45,21 @@ class CartController extends Controller
 
         $totalPembayaran = $harga + $kodeUnik;
         $countCart = Cart::where('id_user', Auth::user()->id)->count();
-        return view('cart', compact('kodeUnik', 'harga', 'totalPembayaran', 'countCart'));
+
+        // $listTanggalBooking = Transaction::pluck('tanggal_awal_booking', 'tanggal_akhir_booking');
+
+        // $listTanggal = [];
+
+        // foreach ($listTanggalBooking as $key => $value) {
+        //     $listTanggal[] = [
+        //         'start' => $key,
+        //         'end' => $value
+        //     ];
+        // }
+
+        $listTanggalBooking = Transaction::pluck('tanggal_awal_booking', 'tanggal_akhir_booking')->toArray();
+
+        return view('cart', compact('kodeUnik', 'harga', 'totalPembayaran', 'countCart', 'listTanggalBooking'));
     }
 
     public function addToCart(Request $request, $id)
@@ -104,5 +119,28 @@ class CartController extends Controller
         }
 
         return response()->json($query);
+    }
+
+    public function getTanggalBooking()
+    {
+        // Ambil semua transaksi
+        $transactions = Transaction::all();
+
+        $listDateBooked = [];
+
+        foreach ($transactions as $transaction) {
+            // Menggunakan Carbon untuk mengiterasi dari tanggal_awal_booking hingga tanggal_akhir_booking
+            $period = Carbon::parse($transaction->tanggal_awal_booking)->daysUntil($transaction->tanggal_akhir_booking);
+
+            // Tambahkan setiap tanggal dalam periode ke array
+            foreach ($period as $date) {
+                $listDateBooked[] = $date->format('Y-m-d');
+            }
+        }
+
+        // Menghapus duplikat tanggal
+        $listDateBooked = array_unique($listDateBooked);
+
+        return response()->json($listDateBooked);
     }
 }

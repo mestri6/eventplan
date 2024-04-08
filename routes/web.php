@@ -106,6 +106,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/hapus/cart', [CartController::class, 'destroy'])->name('cart-delete');
     Route::get('/checkout/pembayaran/success', [TransactionsController::class, 'success'])->name('pembayaran');
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout');
+    Route::get('/cart/get-tanggal-booking', [CartController::class, 'getTanggalBooking'])->name('get-tanggal-booking');
 });
 
 Auth::routes();

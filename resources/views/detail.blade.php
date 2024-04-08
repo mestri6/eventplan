@@ -39,6 +39,9 @@
         <div class="col-md-6 product_data">
             <div class="d-flex name-store">
                 <div class="flex-grow-1 ms-3 py-1">
+                    <span>
+                        <i class="bi bi-shop"></i> &nbsp; {{ $item->user->name }}
+                    </span>
                     <h3>
                         {{ $item->nama_layanan }}
                     </h3>

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('id_layanan')->nullable();
             $table->string('id_user')->nullable();
             $table->string('id_order')->nullable();
-            $table->date('tanggal_acara');
+            $table->date('tanggal_awal_booking')->nullable();
+            $table->date('tanggal_akhir_booking')->nullable();
             $table->string('alamat');
             $table->enum('status_pembayaran', ['tertunda', 'berhasil', 'gagal'])->default('tertunda');
             $table->string('bukti_pembayaran')->nullable();
