@@ -14,12 +14,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mua\AkunMuaController;
 use App\Http\Controllers\Mua\DashboardMuaController;
 use App\Http\Controllers\Mua\LayananMuaController;
+use App\Http\Controllers\Mua\MuaJadwalController;
 use App\Http\Controllers\Mua\TransaksiMuaController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\Wo\AkunWoController;
 use App\Http\Controllers\Wo\DashboardWoController;
 use App\Http\Controllers\Wo\LayananController;
 use App\Http\Controllers\Wo\TransaksiWoController;
+use App\Http\Controllers\Wo\WoJadwalController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -61,9 +63,12 @@ Route::prefix('wo')
         Route::get('/dashboard', [DashboardWoController::class, 'index'])->name('wo.dashboard');
         Route::put('/akun/handle-toko', [AkunWoController::class, 'handleToko'])->name('wo.handle-toko');
         Route::delete('/layanan-wo/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('delete-gallery-layanan');
+        Route::get('/jadwal/show', [WoJadwalController::class, 'show'])->name('jadwal-wo-show');
+        Route::delete('/jadwal/delete', [WoJadwalController::class, 'destroy'])->name('jadwal-wo-destroy');
 
         Route::resource('layanan-wo', LayananController::class);
         Route::resource('transaksi-wo', TransaksiWoController::class);
+        Route::resource('jadwal-wo', WoJadwalController::class);
         Route::resource('akun-wo', AkunWoController::class);
     });
 
@@ -73,10 +78,12 @@ Route::prefix('mua')
         Route::get('/dashboard', [DashboardMuaController::class, 'index'])->name('mua.dashboard');
         Route::put('/akun/handle-toko', [AkunMuaController::class, 'handleToko'])->name('mua.handle-toko');
         Route::delete('/layanan-mua/delete-gallery/{id}', [LayananController::class, 'deleteGallery'])->name('mua-delete-gallery-layanan');
-
+        Route::get('/jadwal/show', [MuaJadwalController::class, 'show'])->name('jadwal-mua-show');
+        Route::delete('/jadwal/delete', [MuaJadwalController::class, 'destroy'])->name('jadwal-mua-destroy');
 
         Route::resource('layanan-mua', LayananMuaController::class);
         Route::resource('transaksi-mua', TransaksiMuaController::class);
+        Route::resource('jadwal-mua', MuaJadwalController::class);
         Route::resource('akun-mua', AkunMuaController::class);
     });
 

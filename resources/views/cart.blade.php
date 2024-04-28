@@ -132,7 +132,7 @@
 
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
-<script>
+{{-- <script>
     $(document).ready(async function() {
     var listDateBooked = [];
 
@@ -159,6 +159,32 @@
             return [listDateBooked.indexOf(string) === -1];
         }
     });
+});
+</script> --}}
+
+<script>
+    $(document).ready(function() {
+    var unavailableDates = [];
+
+    $.ajax({
+        type: "GET",
+        url: "{{ route('get-tanggal-booking') }}",
+        success: function(res) {
+            unavailableDates = res.unavailableDates;
+            initDatepicker();
+        }
+    });
+
+    function initDatepicker() {
+        $('.datepicker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: 0,
+            beforeShowDay: function(date) {
+                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                return [unavailableDates.indexOf(string) === -1];
+            }
+        });
+    }
 });
 </script>
 

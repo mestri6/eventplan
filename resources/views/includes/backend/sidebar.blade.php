@@ -171,6 +171,12 @@
 			</a>
 		</li>
 		<li class="nav-item">
+			<a class="nav-link {{ (request()->is('wo/jadwal') ? 'active' : '') }}" href="{{ route('jadwal-wo.index') }}">
+				<span class="menu-title">Jadwal</span>
+				<i class="mdi mdi-calendar-clock menu-icon"></i>
+			</a>
+		</li>
+		<li class="nav-item">
 			<a class="nav-link {{ (request()->is('wo/akun') ? 'active' : '') }}" href="{{ route('akun-wo.index') }}">
 				<span class="menu-title">Akun</span>
 				<i class="mdi mdi-face-profile menu-icon"></i>
@@ -212,6 +218,13 @@
 				href="{{ route('transaksi-mua.index') }}">
 				<span class="menu-title">Transaksi</span>
 				<i class="mdi mdi-credit-card-multiple menu-icon"></i>
+			</a>
+		</li>
+
+		<li class="nav-item">
+			<a class="nav-link {{ (request()->is('mua/jadwal') ? 'active' : '') }}" href="{{ route('jadwal-mua.index') }}">
+				<span class="menu-title">Jadwal</span>
+				<i class="mdi mdi-calendar-clock menu-icon"></i>
 			</a>
 		</li>
 
