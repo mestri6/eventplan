@@ -47,7 +47,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="tanggal_awal_tutup" class="form-label">Tanggal Libur</label>
+                                <label for="tanggal_awal_tutup" class="form-label">Tanggal Awal Libur</label>
                                 <input type="date" class="form-control" id="tanggal_awal_tutup" name="tanggal_awal_tutup">
                                 <div class="invalid-feedback" id="tanggal_awal_tutup_feedback"></div>
                             </div>
@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-12 col-lg-12">
                             <div class="form-group">
-                                <label for="tanggal_akhir_tutup" class="form-label">Tanggal Libur</label>
+                                <label for="tanggal_akhir_tutup" class="form-label">Tanggal Akhir Libur</label>
                                 <input type="date" class="form-control" id="tanggal_akhir_tutup" name="tanggal_akhir_tutup">
                                 <div class="invalid-feedback" id="tanggal_akhir_tutup_feedback"></div>
                             </div>
