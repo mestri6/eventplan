@@ -20,8 +20,11 @@ class WoJadwalController extends Controller
 
             return datatables()->of($query)
                 ->addIndexColumn()
-                ->editColumn('tanggal', function ($item) {
-                    return Carbon::parse($item->tanggal)->isoFormat('dddd, D MMMM Y');
+                ->editColumn('tanggal_awal_tutup', function ($item) {
+                    return Carbon::parse($item->tanggal_awal_tutup)->isoFormat('dddd, D MMMM Y');
+                })
+                ->editColumn('tanggal_akhir_tutup', function ($item) {
+                    return Carbon::parse($item->tanggal_akhir_tutup)->isoFormat('dddd, D MMMM Y');
                 })
                 ->editColumn('action', function ($item) {
                     return '
@@ -56,7 +59,8 @@ class WoJadwalController extends Controller
             ['id' => $request->id],
             [
                 'id_user' => Auth::user()->id,
-                'tanggal' => $request->tanggal,
+                'tanggal_awal_tutup' => $request->tanggal_awal_tutup,
+                'tanggal_akhir_tutup' => $request->tanggal_akhir_tutup,
             ]
         );
 

@@ -153,34 +153,66 @@ class CartController extends Controller
     //     ]);
     // }
 
+    // public function getTanggalBooking()
+    // {
+    //     // Mengambil tanggal booking dari transaksi
+    //     $transactions = Transaction::select('tanggal_awal_booking', 'tanggal_akhir_booking')->get();
+
+    //     $listDateBooked = [];
+
+    //     foreach ($transactions as $transaction) {
+    //         $period = Carbon::parse($transaction->tanggal_awal_booking)
+    //             ->daysUntil($transaction->tanggal_akhir_booking);
+    //         foreach ($period as $date) {
+    //             $listDateBooked[] = $date->format('Y-m-d');
+    //         }
+    //     }
+
+    //     $listDateBooked = array_values(array_unique($listDateBooked));
+
+    //     // Mengambil tanggal tutup berdasarkan jadwal yang terkait dengan user
+    //     $cart = Cart::where('id_user', Auth::user()->id)->pluck('id_layanan')->toArray();
+    //     $yangPunyaLayanan = Layanan::whereIn('id_layanan', $cart)->pluck('id_user')->toArray();
+    //     $jadwalTutup = Jadwal::whereIn('id_user', $yangPunyaLayanan)->pluck('tanggal')->toArray();
+
+    //     // Gabungkan tanggal yang dibook dengan jadwal tutup
+    //     $datesUnavailable = array_merge($listDateBooked, $jadwalTutup);
+    //     $datesUnavailable = array_values(array_unique($datesUnavailable));
+
+    //     return response()->json([
+    //         'unavailableDates' => $datesUnavailable
+    //     ]);
+    // }
+
     public function getTanggalBooking()
     {
-        // Mengambil tanggal booking dari transaksi
+        // Inisialisasi array untuk menyimpan tanggal yang tidak tersedia
+        $unavailableDates = [];
+
+        // Ambil semua transaksi dan tambahkan ke array tanggal yang tidak tersedia
         $transactions = Transaction::select('tanggal_awal_booking', 'tanggal_akhir_booking')->get();
-
-        $listDateBooked = [];
-
         foreach ($transactions as $transaction) {
-            $period = Carbon::parse($transaction->tanggal_awal_booking)
-                ->daysUntil($transaction->tanggal_akhir_booking);
+            $period = Carbon::parse($transaction->tanggal_awal_booking)->daysUntil($transaction->tanggal_akhir_booking)->toArray();
             foreach ($period as $date) {
-                $listDateBooked[] = $date->format('Y-m-d');
+                $unavailableDates[] = $date->format('Y-m-d');
             }
         }
 
-        $listDateBooked = array_values(array_unique($listDateBooked));
+        // Ambil semua jadwal tutup dan tambahkan ke array tanggal yang tidak tersedia
+        $jadwalTutup = Jadwal::select('tanggal_awal_tutup', 'tanggal_akhir_tutup')->get();
+        foreach ($jadwalTutup as $jadwal) {
+            $periodTutup = Carbon::parse($jadwal->tanggal_awal_tutup)->daysUntil($jadwal->tanggal_akhir_tutup)->toArray();
+            foreach ($periodTutup as $dateTutup) {
+                $unavailableDates[] = $dateTutup->format('Y-m-d');
+            }
+        }
 
-        // Mengambil tanggal tutup berdasarkan jadwal yang terkait dengan user
-        $cart = Cart::where('id_user', Auth::user()->id)->pluck('id_layanan')->toArray();
-        $yangPunyaLayanan = Layanan::whereIn('id_layanan', $cart)->pluck('id_user')->toArray();
-        $jadwalTutup = Jadwal::whereIn('id_user', $yangPunyaLayanan)->pluck('tanggal')->toArray();
+        // Hilangkan duplikat tanggal dan reset index array
+        $unavailableDates = array_values(array_unique($unavailableDates));
 
-        // Gabungkan tanggal yang dibook dengan jadwal tutup
-        $datesUnavailable = array_merge($listDateBooked, $jadwalTutup);
-        $datesUnavailable = array_values(array_unique($datesUnavailable));
-
+        // Kirim kembali tanggal yang tidak tersedia sebagai respons JSON
         return response()->json([
-            'unavailableDates' => $datesUnavailable
+            'unavailableDates' => $unavailableDates
         ]);
     }
 

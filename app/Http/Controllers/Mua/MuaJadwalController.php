@@ -53,7 +53,8 @@ class MuaJadwalController extends Controller
             ['id' => $request->id],
             [
                 'id_user' => Auth::user()->id,
-                'tanggal' => $request->tanggal,
+                'tanggal_awal_tutup' => $request->tanggal_awal_tutup,
+                'tanggal_akhir_tutup' => $request->tanggal_akhir_tutup,
             ]
         );
 

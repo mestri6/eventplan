@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
             $table->string('id_user');
-            $table->date('tanggal');
+            $table->date('tanggal_awal_tutup');
+            $table->date('tanggal_akhir_tutup');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'MUA - Jadwal')
+@section('title', 'WO - Jadwal')
 
 @section('content')
 
@@ -19,7 +19,8 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Tanggal Libur</th>
+                                <th>Tanggal Awal Libur</th>
+                                <th>Tanggal Akhir Libur</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -46,9 +47,18 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="tanggal" class="form-label">Tanggal Libur</label>
-                                <input type="date" class="form-control" id="tanggal" name="tanggal">
-                                <div class="invalid-feedback" id="tanggal-feedback"></div>
+                                <label for="tanggal_awal_tutup" class="form-label">Tanggal Libur</label>
+                                <input type="date" class="form-control" id="tanggal_awal_tutup" name="tanggal_awal_tutup">
+                                <div class="invalid-feedback" id="tanggal_awal_tutup_feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="tanggal_akhir_tutup" class="form-label">Tanggal Libur</label>
+                                <input type="date" class="form-control" id="tanggal_akhir_tutup" name="tanggal_akhir_tutup">
+                                <div class="invalid-feedback" id="tanggal_akhir_tutup_feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -86,13 +96,14 @@
         $('#id').val(id);
 
         $.ajax({
-            url: "{{ route('jadwal-mua-show') }}",
+            url: "{{ route('jadwal-wo-show') }}",
             type: 'GET',
             data: {
                 'id': id
             },
             success: function(response) {
-                $('#tanggal').val(response.tanggal);
+                $('#tanggal_awal_tutup').val(response.tanggal_awal_tutup);
+                $('#tanggal_akhir_tutup').val(response.tanggal_akhir_tutup);
             }
         });
     }
@@ -110,7 +121,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "{{ route('jadwal-mua-destroy') }}",
+                    url: "{{ route('jadwal-wo-destroy') }}",
                     type: 'DELETE',
                     data: {
                         '_token': '{{ csrf_token() }}',
@@ -135,7 +146,7 @@
         $('#tanggal-feedback').html('');
 
         $.ajax({
-            url: "{{ route('jadwal-mua.store') }}",
+            url: "{{ route('jadwal-wo.store') }}",
             type: 'POST',
             data: $(this).serialize(),
             beforeSend: function() {
@@ -151,7 +162,7 @@
 
                 if ($.isEmptyObject(res) == false) {
                     $.each(res.errors, function(key, value) {
-                        $('#' + key + '-feedback').html(value);
+                        $('#' + key + '_feedback').html(value);
                     });
                 }
             }
@@ -168,7 +179,8 @@
         },
         columns: [
             { data: 'DT_RowIndex', name: 'id' },
-            { data: 'tanggal', name: 'tanggal' },
+            { data: 'tanggal_awal_tutup', name: 'tanggal_awal_tutup' },
+            { data: 'tanggal_akhir_tutup', name: 'tanggal_akhir_tutup' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],
     });
